@@ -22,10 +22,15 @@
     "yarn": ">= 0.18.0"
   },
   "scripts": {
-    "test": "npm run eslint && npm run mocha",
-    "eslint": "eslint src/. test/. --config .eslintrc.json",
+    "mocha": "nyc mocha -u tdd --timeout 999999 --colors test/ --recursive",
+    "lint": "standard --fix",
     "start": "node src/",
-    "mocha": "mocha test/ --recursive"
+    "test": "npm run lint && npm run mocha"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ]
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -43,9 +48,10 @@
     "winston": "^2.3.1"
   },
   "devDependencies": {
-    "eslint": "^4.7.2",
     "mocha": "^3.5.3",
+    "nyc": "^11.2.1",
     "request": "^2.83.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "standard": "^10.0.3"
   }
 }
