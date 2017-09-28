@@ -44,6 +44,7 @@
     "feathers-hooks": "^2.0.4",
     "feathers-hooks-common": "^3.7.3",
     "feathers-mongodb": "^2.9.0",
+    "feathers-postmark": "^0.0.7",
     "feathers-rest": "^1.8.0",
     "feathers-socketio": "^2.0.0",
     "helmet": "^3.8.2",

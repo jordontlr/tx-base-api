@@ -1250,7 +1250,7 @@ feathers-configuration@^0.4.1:
     config "^1.21.0"
     debug "^2.2.0"
 
-feathers-errors@^2.0.1, feathers-errors@^2.2.0, feathers-errors@^2.4.0, feathers-errors@^2.5.0, feathers-errors@^2.9.2:
+feathers-errors@^2.0.1, feathers-errors@^2.2.0, feathers-errors@^2.4.0, feathers-errors@^2.5.0, feathers-errors@^2.6.2, feathers-errors@^2.9.2:
   version "2.9.2"
   resolved "https://registry.yarnpkg.com/feathers-errors/-/feathers-errors-2.9.2.tgz#96ca0e5fe50cc56f0eccc90ce3fa5e1f8840828d"
   dependencies:
@@ -1282,6 +1282,15 @@ feathers-mongodb@^2.9.0:
     feathers-errors "^2.0.1"
     feathers-query-filters "^2.0.0"
     lodash.omit "^4.3.0"
+    uberproto "^1.2.0"
+
+feathers-postmark@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/feathers-postmark/-/feathers-postmark-0.0.7.tgz#c9dad7e416062000a4a6023d79000250ffa4984f"
+  dependencies:
+    debug "^2.6.3"
+    feathers-errors "^2.6.2"
+    postmark "^1.3.1"
     uberproto "^1.2.0"
 
 feathers-query-filters@^2.0.0:
@@ -2258,6 +2267,10 @@ merge-source-map@^1.0.2:
   dependencies:
     source-map "^0.5.6"
 
+merge@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
+
 methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
@@ -2722,6 +2735,12 @@ platform@1.3.4:
 pluralize@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
+
+postmark@^1.3.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/postmark/-/postmark-1.4.1.tgz#68240baddc4bce37c68b23478bffbf114bd89f04"
+  dependencies:
+    merge "1.2.0"
 
 prelude-ls@~1.1.2:
   version "1.1.2"

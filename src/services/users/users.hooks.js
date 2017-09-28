@@ -1,8 +1,7 @@
 const { authenticate } = require('feathers-authentication').hooks;
-const commonHooks = require('feathers-hooks-common');
 const { restrictToOwner } = require('feathers-authentication-hooks');
-
 const { hashPassword } = require('feathers-authentication-local').hooks;
+const { iff, when, discard, disallow, isProvider, lowerCase } = require('feathers-hooks-common')
 const restrict = [
   authenticate('jwt'),
   restrictToOwner({
@@ -11,39 +10,72 @@ const restrict = [
   })
 ];
 
-module.exports = {
-  before: {
-    all: [],
-    find: [ authenticate('jwt') ],
-    get: [ ...restrict ],
-    create: [ hashPassword() ],
-    update: [ ...restrict, hashPassword() ],
-    patch: [ ...restrict, hashPassword() ],
-    remove: [ ...restrict ]
-  },
+const isExistingUser = require('./hook.is-existing-user')
+const createTemporaryPassword = require('./hook.create-temp-password')
+const sendWelcomeEmail = require('./hook.email.welcome')
+const sendDuplicateSignupEmail = require('./hook.email.duplicate-signup')
 
-  after: {
-    all: [
-      commonHooks.when(
-        hook => hook.params.provider,
-        commonHooks.discard('password')
-      )
-    ],
-    find: [],
-    get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
-  },
+module.exports = function (app) {
+  const outboundEmail = app.get('outboundEmail')
+  const emailTemplates = app.get('postmarkTemplateIds')
 
-  error: {
-    all: [],
-    find: [],
-    get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
+  return {
+    before: {
+      all: [],
+      find: [authenticate('jwt')],
+      get: [...restrict],
+      create: [
+        isExistingUser(),
+        iff(
+          hook => !hook.params.existingUser,
+          // If the user has passed a password for account creation, delete it.
+          discard('password'),
+          createTemporaryPassword({hashedPasswordField: 'tempPassword', plainPasswordField: 'tempPasswordPlain'}),
+          hashPassword({passwordField: 'tempPassword', timeStampField: 'tempPasswordCreatedAt'})
+        )
+      ],
+      update: [...restrict, hashPassword()],
+      patch: [...restrict, hashPassword()],
+      remove: [...restrict]
+    },
+
+    after: {
+      all: [
+        when(
+          hook => hook.params.provider,
+          discard('password')
+        )
+      ],
+      find: [],
+      get: [],
+      create: [
+        iff(
+          hook => hook.params.existingUser,
+          sendDuplicateSignupEmail({
+            From: outboundEmail,
+            TemplateId: emailTemplates.duplicateSignup
+          })
+        ).else(
+          sendWelcomeEmail({
+            From: outboundEmail,
+            TemplateId: emailTemplates.welcome,
+            tempPasswordField: 'tempPasswordPlain'
+          })
+        )
+      ],
+      update: [],
+      patch: [],
+      remove: []
+    },
+
+    error: {
+      all: [],
+      find: [],
+      get: [],
+      create: [],
+      update: [],
+      patch: [],
+      remove: []
+    }
   }
-};
+}

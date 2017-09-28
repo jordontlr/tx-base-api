@@ -70,5 +70,17 @@
       "secure": false
     }
   },
-  "mongodb": "mongodb://localhost:27017/tx_notify_api"
+  "mongodb": "mongodb://localhost:27017/tx_notify_api",
+
+  "postmark": {
+    "key": "POSTMARK_API_KEY"
+  },
+  "outboundEmail": "info@equibitgroup.com",
+  "postmarkTemplateIds": {
+    "welcome": 1469183,
+    "duplicateSignup": 1472482,
+    "forgotPasswordExisting": 1480221,
+    "forgotPasswordNonExisting": 1480222,
+    "securityAlertFailedLogins": 1854481
+  }
 }
