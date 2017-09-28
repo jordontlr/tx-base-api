@@ -5,5 +5,70 @@
   "paginate": {
     "default": 10,
     "max": 50
-  }
+  },
+  "authentication": {
+    "secret": "eec4fdc7117b8e4ae2fb3cec734523a270b38329dbb25934ec6c9d1b9018ec41dce1fd758cbc647eef22b23b1edaa1f7a48e75128c875f5d8b193eab5d779142f5c416bc649260c43cbef56cc6c3bd594704edd077fbd85b5b1a28e8bff9f23fa5d5b48cddaf3f9bb8533efd2beb74f271908cba6027fba1f4464400d82dfd7754f07db2c87c60279ec8b9dcd81026f4b13cf0ad1e204ae99b07207f68c9f3fd190229a540f461fb6dd0b85032ebb6d6f1371318c30dc062e8f55a4b1301f022dc10a59091513b79f741be9933c5b24855d96edcdc8edd40bccf5d3731f0ebae76a090aa21e2591398538cd6ee14fabe142ece1a58dd9392cc54ed4a6ee64cbb",
+    "strategies": [
+      "jwt",
+      "local"
+    ],
+    "path": "/authentication",
+    "service": "users",
+    "jwt": {
+      "header": {
+        "type": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "subject": "anonymous",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "entity": "user",
+      "usernameField": "email",
+      "passwordField": "password"
+    },
+    "google": {
+      "clientID": "your google client id",
+      "clientSecret": "your google client secret",
+      "successRedirect": "/",
+      "scope": [
+        "profile openid email"
+      ]
+    },
+    "facebook": {
+      "clientID": "your facebook client id",
+      "clientSecret": "your facebook client secret",
+      "successRedirect": "/",
+      "scope": [
+        "public_profile",
+        "email"
+      ],
+      "profileFields": [
+        "id",
+        "displayName",
+        "first_name",
+        "last_name",
+        "email",
+        "gender",
+        "profileUrl",
+        "birthday",
+        "picture",
+        "permissions"
+      ]
+    },
+    "github": {
+      "clientID": "your github client id",
+      "clientSecret": "your github client secret",
+      "successRedirect": "/"
+    },
+    "cookie": {
+      "enabled": true,
+      "name": "feathers-jwt",
+      "httpOnly": false,
+      "secure": false
+    }
+  },
+  "mongodb": "mongodb://localhost:27017/tx_notify_api"
 }
