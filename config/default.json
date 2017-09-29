@@ -75,12 +75,16 @@
   "postmark": {
     "key": "POSTMARK_API_KEY"
   },
-  "outboundEmail": "info@equibitgroup.com",
+  "outboundEmail": "info@txnotify.com",
   "postmarkTemplateIds": {
-    "welcome": 1469183,
-    "duplicateSignup": 1472482,
-    "forgotPasswordExisting": 1480221,
-    "forgotPasswordNonExisting": 1480222,
-    "securityAlertFailedLogins": 1854481
+    "welcome": 3362207,
+    "changeEmail": 3362202,
+    "duplicateSignup": 3362205,
+    "forgotPasswordExisting": 3362203,
+    "forgotPasswordNonExisting": 3362183,
+    "securityAlertFailedLogins": 3362204,
+    "supportRequestNoAccount": 3362184,
+    "supportRequestReceived": 3362206,
+    "supportRequestResponse": 3362185
   }
 }
