@@ -19,11 +19,14 @@ module.exports = function (options = {}) {
         users = users.data || users
         let user = users[0]
         // User already signed up.
+        console.log(`[hook.is-existing] ${hook.data[options.findByField]}`)
         if (user) {
+          console.log(`- existing user`)
           hook.params.existingUser = user
           // Set hook.result, so the call to the database will be skipped.
           hook.result = { email: hook.data.email }
         } else {
+          console.log(`- NON-existing user`)
           hook.data.isNewUser = true
         }
         return hook

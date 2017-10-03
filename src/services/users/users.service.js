@@ -1,3 +1,5 @@
+'use strict'
+
 // Initializes the `users` service on path `/users`
 const createService = require('feathers-mongoose')
 const createModel = require('../../models/users.model')
