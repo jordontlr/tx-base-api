@@ -1,4 +1,3 @@
-const { createHash } = require('feathers-authentication-signed/utils')
 const { randomBytes } = require('crypto')
 
 const defaults = {
@@ -12,14 +11,13 @@ module.exports = function (options) {
   options = Object.assign({}, defaults, options)
 
   return hook => {
-    return new Promise(resolve => {
-      console.log(`[hook.create-temp-password]`)
-      let tempPassword = randomBytes(8).toString('hex')
-      // create a random string which is the user's plain-text tempPassword.
-      hook.data[options.plainPasswordField] = tempPassword
-      // run tempPassword through the hashPassword hook.
-      hook.data[options.passwordField] = createHash(tempPassword)
-      resolve(hook)
-    })
+    let tempPassword = randomBytes(8).toString('hex')
+    // create a random string which is the user's plain-text tempPassword (will be hashed in hooks)
+    hook.data[options.passwordField] = tempPassword
+
+    // Keep plain password for email:
+    hook.data[options.plainPasswordField] = tempPassword
+
+    return hook
   }
 }

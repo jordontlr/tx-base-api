@@ -5,6 +5,7 @@ const oauth2 = require('feathers-authentication-oauth2');
 const GoogleStrategy = require('passport-google-oauth20');
 const FacebookStrategy = require('passport-facebook');
 const GithubStrategy = require('passport-github');
+const MyVerifier = require('./authentication-verifier')
 
 module.exports = function () {
   const app = this;
@@ -13,7 +14,10 @@ module.exports = function () {
   // Set up authentication with the secret
   app.configure(authentication(config));
   app.configure(jwt());
-  app.configure(local());
+  app.configure(local({
+    tmpPasswordField: 'tempPassword',
+    Verifier: MyVerifier
+  }));
 
   app.configure(oauth2(Object.assign({
     name: 'google',
