@@ -45,6 +45,23 @@ module.exports = function () {
       remove: [
         authentication.hooks.authenticate('jwt')
       ]
+    },
+    after: {
+      create: [
+        // Return user to avoid extra request.
+        // Add `tmpPasswordUsed` flag if necessary.
+        hook => {
+          // console.log("\n\n\n------- AUTH AFTER CREATE !!!", hook.params, hook.result)
+          // console.log("------------------------------\n\n\n\n")
+          if (hook.params.tmpPasswordUsed && hook.params.user.tempPassword) {
+            hook.result.tmpPasswordUsed = true
+          }
+          hook.result.user = hook.params.user
+          delete hook.result.user.password
+          delete hook.result.user.tempPassword
+          return hook
+        }
+      ]
     }
   });
 };

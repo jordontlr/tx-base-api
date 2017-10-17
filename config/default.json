@@ -18,7 +18,7 @@
       "header": {
         "type": "access"
       },
-      "audience": "https://yourdomain.com",
+      "audience": "https://tx-notify.com",
       "subject": "anonymous",
       "issuer": "feathers",
       "algorithm": "HS256",

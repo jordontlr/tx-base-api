@@ -43,7 +43,8 @@ module.exports = function (app) {
       all: [
         when(
           hook => hook.params.provider,
-          discard('password')
+          discard('password'),
+          discard('tempPassword'),
         )
       ],
       find: [],
