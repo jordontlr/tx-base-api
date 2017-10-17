@@ -27,10 +27,10 @@ class TmpPswdVerifier extends Verifier {
       .catch(() => {
         debug('Password failed. Trying tmpPassword...')
         return comparePswd(password, tmpHash)
-      })
-      .then(() => {
-        entity.tmpPasswordUsed = true
-        return entity
+          .then(() => {
+            entity.tmpPasswordUsed = true
+            return entity
+          })
       })
   }
 }
