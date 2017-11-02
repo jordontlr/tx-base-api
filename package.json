@@ -22,7 +22,8 @@
     "mocha": "nyc mocha -u tdd --timeout 999999 --colors test/ --recursive",
     "lint": "standard --fix",
     "start": "node src/",
-    "test": "npm run lint && npm run mocha"
+    "test": "npm run lint && NODE_ENV=ci npm run mocha",
+    "test-local": "NODE_ENV=testing npm run lint && npm run mocha"
   },
   "standard": {
     "env": [
