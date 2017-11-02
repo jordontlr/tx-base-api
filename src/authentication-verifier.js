@@ -3,7 +3,7 @@ const get = require('lodash').get
 const bcrypt = require('bcryptjs')
 const Debug = require('debug')
 
-const debug = Debug('feathers-authentication-local-tmp:_comparePassword');
+const debug = Debug('feathers-authentication-local-tmp:_comparePassword')
 
 class TmpPswdVerifier extends Verifier {
   _comparePassword (entity, password) {
@@ -21,7 +21,7 @@ class TmpPswdVerifier extends Verifier {
       )
     }
 
-    debug('Verifying password');
+    debug('Verifying password')
 
     return comparePswd(password, hash)
       .catch(() => {
@@ -38,7 +38,7 @@ const comparePswd = (password, hash) => {
   return new Promise((resolve, reject) => {
     if (!hash) {
       debug('No hash')
-      reject('Empty hash')
+      reject(new Error('Empty hash'))
     }
     debug(`Trying compare password with hash=${hash}`)
     bcrypt.compare(password, hash, function (error, result) {
@@ -49,7 +49,7 @@ const comparePswd = (password, hash) => {
 
       if (!result) {
         debug('Password incorrect')
-        return reject(false)
+        return reject(new Error('Password incorrect'))
       }
 
       debug('Password correct')

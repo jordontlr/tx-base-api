@@ -1,14 +1,14 @@
-const { authenticate } = require('feathers-authentication').hooks;
-const { restrictToOwner } = require('feathers-authentication-hooks');
-const { hashPassword } = require('feathers-authentication-local').hooks;
-const { iff, when, discard, disallow, isProvider, lowerCase } = require('feathers-hooks-common')
+const { authenticate } = require('feathers-authentication').hooks
+const { restrictToOwner } = require('feathers-authentication-hooks')
+const { hashPassword } = require('feathers-authentication-local').hooks
+const { iff, when, discard } = require('feathers-hooks-common') // disallow, isProvider, lowerCase
 const restrict = [
   authenticate('jwt'),
   restrictToOwner({
     idField: '_id',
     ownerField: '_id'
   })
-];
+]
 
 const isExistingUser = require('./hook.is-existing-user')
 const createTemporaryPassword = require('./hook.create-temp-password')
@@ -44,7 +44,7 @@ module.exports = function (app) {
         when(
           hook => hook.params.provider,
           discard('password'),
-          discard('tempPassword'),
+          discard('tempPassword')
         )
       ],
       find: [],

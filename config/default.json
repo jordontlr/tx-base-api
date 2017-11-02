@@ -70,7 +70,7 @@
       "secure": false
     }
   },
-  "mongodb": "mongodb://localhost:27017/tx_notify_api",
+  "mongodb": "mongodb://localhost:27017/tx_base_api",
 
   "postmark": {
     "key": "POSTMARK_API_KEY"
