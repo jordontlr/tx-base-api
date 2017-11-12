@@ -15,11 +15,9 @@ class Service {
   }
 
   create (data, params) {
-    if (Array.isArray(data)) {
-      return Promise.all(data.map(current => this.create(current)))
-    }
-
-    return Promise.resolve(data)
+    const app = this.options.app
+    const userId = params.user._id
+    return app.service('users').patch(userId, data)
   }
 
   update (id, data, params) {
