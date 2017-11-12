@@ -19,7 +19,7 @@
     "yarn": ">= 0.18.0"
   },
   "scripts": {
-    "mocha": "nyc mocha -u tdd --timeout 999999 --colors test/ --recursive",
+    "mocha": "nyc mocha -u tdd --timeout 999999 --colors test/test.js",
     "lint": "standard --fix",
     "start": "node src/",
     "test": "npm run lint && NODE_ENV=ci npm run mocha",

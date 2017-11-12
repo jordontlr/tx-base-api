@@ -10,12 +10,11 @@ const app = feathers()
 describe('MyVerifier', function () {
   const options = {
     service: {},
-    tmpPasswordField: 'tempPassword',
     passwordField: 'password'
   }
   const entity = {
     password: '123',
-    tempPassword: '456'
+    tmpPassword: '456'
   }
   const verifier = new MyVerifier(app, options)
 
@@ -40,10 +39,39 @@ describe('MyVerifier', function () {
       app,
       data: entity
     }
-    return hashPassword({passwordField: 'tempPassword'})(hook).then(hook => {
+    return hashPassword({passwordField: 'tmpPassword'})(hook).then(hook => {
       return verifier._comparePassword(hook.data, password)
     }).then(() => {
       assert.ok('Tmp password was OK')
     })
+  })
+
+  it('checks the temporary password field if there is no main password', () => {
+    const password = '456'
+    const hook = {
+      type: 'before',
+      app,
+      data: {tmpPassword: '456'}
+    }
+    return hashPassword({passwordField: 'tmpPassword'})(hook).then(hook => {
+      return verifier._comparePassword(hook.data, password)
+    }).then(() => {
+      assert.ok('Tmp password was OK')
+    })
+  })
+
+  it('should reject if there is no passwords in db', () => {
+    const password = '456'
+    return verifier._comparePassword({}, password)
+      // Note: must check the success (which is actually a failure).
+      .then(() => {
+        assert.ok(false, 'should throw an error instead')
+      })
+      // Note: must check the exact error message.
+      .catch(err => {
+        // todo: figure out how not to capture the assertion from `then()` here (instead of the below check).
+        assert.notEqual(err.message, 'should throw an error instead', err.message)
+        assert.notEqual(err.message.search('record in the database is missing both'), -1, 'should reject with the correct message')
+      })
   })
 })
