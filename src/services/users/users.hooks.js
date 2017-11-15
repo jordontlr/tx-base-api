@@ -14,6 +14,8 @@ const isExistingUser = require('./hook.is-existing-user')
 const createTemporaryPassword = require('./hook.create-temp-password')
 const sendWelcomeEmail = require('./hook.email.welcome')
 const sendDuplicateSignupEmail = require('./hook.email.duplicate-signup')
+const getUser = require('./hook.get-user')
+const checkPassword = require('./hook.check-password')
 
 module.exports = function (app) {
   const outboundEmail = app.get('outboundEmail')
@@ -35,7 +37,15 @@ module.exports = function (app) {
         )
       ],
       update: [...restrict, hashPassword()],
-      patch: [...restrict, hashPassword()],
+      patch: [
+        ...restrict,
+        iff (
+          hook => hook.data && hook.data.password,
+          getUser(),
+          checkPassword(),
+          hashPassword()
+        )
+      ],
       remove: [...restrict]
     },
 

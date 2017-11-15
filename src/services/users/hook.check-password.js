@@ -1,0 +1,38 @@
+const errors = require('feathers-errors')
+const comparePassword = require('../../utils/compare-password')
+
+module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
+  return function checkPassword (hook) {
+    // Two cases:
+    // 1. update password: {password, oldPassword}
+    // 2. update email:    {password, newEmail, emailCode}
+
+    const password = hook.data.password
+    const oldPassword = hook.data.oldPassword
+
+    // todo: figure out what to do with `emailCode`.
+    // const emailCode = hook.data.emailCode
+
+    const passwordToCheck = oldPassword || password
+
+    const user = hook.params.user
+
+    if (!user) {
+      return Promise.reject(new Error(`No user found with the provided id ${hook.id}`))
+    }
+
+    return comparePassword(passwordToCheck, user.password).then(() => {
+      if (hook.data.oldPassword) {
+        // delete `oldPassword` but keep `password`
+        delete hook.data.oldPassword
+      } else {
+        // in all other cases delete `password` (to not patch the existing one in db)
+        delete hook.data.password
+      }
+      return hook
+    }).catch(err => {
+      return Promise.reject(new errors.BadRequest('Incorrect password!'))
+    })
+
+  }
+}

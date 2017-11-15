@@ -1,9 +1,8 @@
 const Verifier = require('feathers-authentication-local').Verifier
 const get = require('lodash').get
-const bcrypt = require('bcryptjs')
 const Debug = require('debug')
-
 const debug = Debug('feathers-authentication-local-tmp:_comparePassword')
+const comparePassword = require('./utils/compare-password')
 
 class TmpPswdVerifier extends Verifier {
   _comparePassword (entity, password) {
@@ -23,39 +22,16 @@ class TmpPswdVerifier extends Verifier {
 
     debug('Verifying password')
 
-    return comparePswd(password, hash)
+    return comparePassword(password, hash)
       .catch(() => {
         debug('Password failed. Trying tmpPassword...')
-        return comparePswd(password, tmpHash)
+        return comparePassword(password, tmpHash)
           .then(() => {
             entity.tmpPasswordUsed = true
             return entity
           })
       })
   }
-}
-const comparePswd = (password, hash) => {
-  return new Promise((resolve, reject) => {
-    if (!hash) {
-      debug('No hash')
-      reject(new Error('Empty hash'))
-    }
-    debug(`Trying compare password with hash=${hash}`)
-    bcrypt.compare(password, hash, function (error, result) {
-      // Handle 500 server error.
-      if (error) {
-        return reject(error)
-      }
-
-      if (!result) {
-        debug('Password incorrect')
-        return reject(new Error('Password incorrect'))
-      }
-
-      debug('Password correct')
-      return resolve(true)
-    })
-  })
 }
 
 module.exports = TmpPswdVerifier
