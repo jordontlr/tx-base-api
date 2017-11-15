@@ -21,6 +21,10 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
       return Promise.reject(new Error(`No user found with the provided id ${hook.id}`))
     }
 
+    if (!passwordToCheck) {
+      return Promise.reject(new errors.BadRequest('Please provide a password'))
+    }
+
     return comparePassword(passwordToCheck, user.password).then(() => {
       if (hook.data.oldPassword) {
         // delete `oldPassword` but keep `password`
@@ -30,9 +34,8 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
         delete hook.data.password
       }
       return hook
-    }).catch(err => {
-      return Promise.reject(new errors.BadRequest('Incorrect password!'))
+    }).catch(() => {
+      return Promise.reject(new errors.BadRequest('Incorrect password'))
     })
-
   }
 }

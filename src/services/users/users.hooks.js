@@ -39,7 +39,7 @@ module.exports = function (app) {
       update: [...restrict, hashPassword()],
       patch: [
         ...restrict,
-        iff (
+        iff(
           hook => hook.data && hook.data.password,
           getUser(),
           checkPassword(),
