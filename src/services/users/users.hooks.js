@@ -16,6 +16,8 @@ const sendWelcomeEmail = require('./hook.email.welcome')
 const sendDuplicateSignupEmail = require('./hook.email.duplicate-signup')
 const getUser = require('./hook.get-user')
 const checkPassword = require('./hook.check-password')
+const sendEmailCode = require('./hook.send-email-code')
+const checkEmailCode = require('./hook.check-email-code')
 
 module.exports = function (app) {
   const outboundEmail = app.get('outboundEmail')
@@ -49,6 +51,14 @@ module.exports = function (app) {
             hook.data.tempPassword = ''
             return hook
           }
+        ),
+        iff(
+          hook => (hook.data && hook.data.email && hook.data.password),
+          sendEmailCode()
+        ),
+        iff(
+          hook => (hook.data && hook.data.email && hook.data.emailCode),
+          checkEmailCode()
         )
       ],
       remove: [...restrict]
