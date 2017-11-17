@@ -31,6 +31,9 @@ class TmpPswdVerifier extends Verifier {
             return entity
           })
       })
+      .then(() => {
+        return entity
+      })
   }
 }
 

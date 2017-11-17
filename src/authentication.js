@@ -51,10 +51,6 @@ module.exports = function () {
         // Return user to avoid extra request.
         // Add `tmpPasswordUsed` flag if necessary.
         hook => {
-          console.log(`hook.params.user = `, hook.params.user)
-          return hook
-        },
-        hook => {
           if (hook.params.user.tmpPasswordUsed && hook.params.user.tempPassword) {
             hook.result.tmpPasswordUsed = true
           }
