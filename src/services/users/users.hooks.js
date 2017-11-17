@@ -43,7 +43,12 @@ module.exports = function (app) {
           hook => hook.data && hook.data.password,
           getUser(),
           checkPassword(),
-          hashPassword()
+          hashPassword(),
+          // If password gets changed remove the tempPassword:
+          hook => {
+            hook.data.tempPassword = ''
+            return hook
+          }
         )
       ],
       remove: [...restrict]
