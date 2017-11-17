@@ -9,6 +9,13 @@ module.exports = function () {
 
   const postmarkService = app.service('postmark-messages')
 
+  // Do not send socket events at all:
+  if (postmarkService.filter) {
+    postmarkService.filter(function () {
+      return false
+    })
+  }
+
   postmarkService.hooks({
     before: {
       create: [
