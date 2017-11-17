@@ -7,21 +7,6 @@ const FacebookStrategy = require('passport-facebook')
 const GithubStrategy = require('passport-github')
 const MyVerifier = require('./authentication-verifier')
 
-const findUser = () => hook => {
-  const userService = hook.app.service('users')
-  const email = (hook.params.user && hook.params.user.email) || hook.data.email
-  // lookup the user by email.
-  if (email) {
-    return userService.find({ query: {email} })
-      .then(({ data }) => {
-        hook.params.user = data[0]
-        return hook
-      })
-  } else {
-    return Promise.resolve(hook)
-  }
-}
-
 module.exports = function () {
   const app = this
   const config = app.get('authentication')
@@ -65,7 +50,10 @@ module.exports = function () {
       create: [
         // Return user to avoid extra request.
         // Add `tmpPasswordUsed` flag if necessary.
-        findUser(),
+        hook => {
+          console.log(`hook.params.user = `, hook.params.user)
+          return hook
+        },
         hook => {
           if (hook.params.user.tmpPasswordUsed && hook.params.user.tempPassword) {
             hook.result.tmpPasswordUsed = true
