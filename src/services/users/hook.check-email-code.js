@@ -1,10 +1,19 @@
-// Use this hook to manipulate incoming or outgoing data.
-// For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
+const errors = require('feathers-errors')
 
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return function checkEmailCode (hook) {
-    // Hooks can either return nothing or a promise
-    // that resolves with the `hook` object for asynchronous operations
+    const emailCode = hook.data.emailCode
+
+    const user = hook.params.user
+
+    if (!user) {
+      return Promise.reject(new Error(`No user found with the provided id ${hook.id}`))
+    }
+
+    if (!emailCode || emailCode !== user.emailCode) {
+      return Promise.reject(new errors.BadRequest('Please provide the correct email code.'))
+    }
+
     return Promise.resolve(hook)
   }
 }

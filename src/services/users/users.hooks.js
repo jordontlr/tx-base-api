@@ -1,7 +1,7 @@
 const { authenticate } = require('feathers-authentication').hooks
 const { restrictToOwner } = require('feathers-authentication-hooks')
 const { hashPassword } = require('feathers-authentication-local').hooks
-const { iff, when, discard } = require('feathers-hooks-common') // disallow, isProvider, lowerCase
+const { iff, when, discard, remove } = require('feathers-hooks-common') // disallow, isProvider, lowerCase
 const restrict = [
   authenticate('jwt'),
   restrictToOwner({
@@ -16,7 +16,7 @@ const sendWelcomeEmail = require('./hook.email.welcome')
 const sendDuplicateSignupEmail = require('./hook.email.duplicate-signup')
 const getUser = require('./hook.get-user')
 const checkPassword = require('./hook.check-password')
-const sendEmailCode = require('./hook.send-email-code')
+const sendEmailCode = require('./hook.email.new-email-code')
 const checkEmailCode = require('./hook.check-email-code')
 
 module.exports = function (app) {
@@ -54,11 +54,16 @@ module.exports = function (app) {
           }
         ),
         iff(
-          hook => (hook.data && hook.data.email && hook.data.password),
-          sendEmailCode()
+          hook => (hook.data && hook.data.email && hook.data.newEmail && hook.data.password),
+          sendEmailCode({
+            From: outboundEmail,
+            TemplateId: emailTemplates.changeEmail
+          })
         ),
         iff(
           hook => (hook.data && hook.data.email && hook.data.emailCode),
+          getUser(),
+          checkPassword(),
           checkEmailCode()
         )
       ],
@@ -93,7 +98,12 @@ module.exports = function (app) {
         )
       ],
       update: [],
-      patch: [],
+      patch: [
+        iff(
+          hook => (hook.data && hook.data.email && hook.data.emailCode),
+          remove('emailCode')
+        )
+      ],
       remove: []
     },
 

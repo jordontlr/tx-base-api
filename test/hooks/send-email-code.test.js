@@ -1,5 +1,5 @@
 const assert = require('assert')
-const sendEmailCode = require('../../src/services/users/hook.send-email-code')
+const sendEmailCode = require('../../src/services/users/hook.email.new-email-code')
 
 describe('\'sendEmailCode\' hook', () => {
   it('runs the hook', () => {

@@ -11,7 +11,7 @@ module.exports = function (options) {
   options = Object.assign({}, defaults, options)
 
   return hook => {
-    let tempPassword = randomBytes(8).toString('hex')
+    let tempPassword = randomBytes(5).toString('hex').toUpperCase()
     // create a random string which is the user's plain-text tempPassword (will be hashed in hooks)
     hook.data[options.passwordField] = tempPassword
 

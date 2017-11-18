@@ -13,9 +13,6 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
     const oldPassword = hook.data.oldPassword
     debug(`password = ${password}, oldPassword = ${oldPassword}`)
 
-    // todo: figure out what to do with `emailCode`.
-    // const emailCode = hook.data.emailCode
-
     const passwordToCheck = oldPassword || password
 
     const user = hook.params.user
