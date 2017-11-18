@@ -73,9 +73,9 @@
   "mongodb": "mongodb://localhost:27017/tx_base_api",
 
   "postmark": {
-    "key": "POSTMARK_API_KEY"
+    "key": "65cd34a3-81af-48c0-ad5f-67400a7fbcc6"
   },
-  "outboundEmail": "info@txnotify.com",
+  "outboundEmail": "Tx Base Website <info@txnotify.com>",
   "postmarkTemplateIds": {
     "welcome": 3362207,
     "changeEmail": 3362202,
@@ -86,5 +86,12 @@
     "supportRequestNoAccount": 3362184,
     "supportRequestReceived": 3362206,
     "supportRequestResponse": 3362185
+  },
+  "postMarkVariables": {
+    "companyName": "Tx Base Website",
+    "primaryColour": "#f0ad4e",
+    "secondaryColour": "#f0ad4e",
+    "domain": "https://txuniverse.com",
+    "companyAddress": "Toronto, On, Canada"
   }
 }

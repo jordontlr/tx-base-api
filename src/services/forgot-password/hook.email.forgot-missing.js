@@ -21,14 +21,19 @@ module.exports = function (options = {}) {
     let operatingSystem = (hook.params.userAgent && hook.params.userAgent.os.family) || ''
     let browserName = (hook.params.userAgent && `${hook.params.userAgent.family} ${hook.params.userAgent.major}`) || ''
 
+    const templateModalVars = Object.assign(
+      {
+        operatingSystem,
+        browserName
+      },
+      options.emailBaseVariables
+    )
+
     const message = {
       From: fromAddress,
       To: hook.data.email,
       TemplateId: options.TemplateId,
-      TemplateModel: {
-        operatingSystem,
-        browserName
-      }
+      TemplateModel: templateModalVars
     }
     return postmarkMessages.create(message).then(message => {
       return hook

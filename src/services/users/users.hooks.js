@@ -22,6 +22,7 @@ const checkEmailCode = require('./hook.check-email-code')
 module.exports = function (app) {
   const outboundEmail = app.get('outboundEmail')
   const emailTemplates = app.get('postmarkTemplateIds')
+  const emailBaseVariables = app.get('postMarkVariables')
 
   return {
     before: {
@@ -79,13 +80,15 @@ module.exports = function (app) {
           hook => hook.params.existingUser,
           sendDuplicateSignupEmail({
             From: outboundEmail,
-            TemplateId: emailTemplates.duplicateSignup
+            TemplateId: emailTemplates.duplicateSignup,
+            emailBaseVariables
           })
         ).else(
           sendWelcomeEmail({
             From: outboundEmail,
             TemplateId: emailTemplates.welcome,
-            tempPasswordField: 'tempPasswordPlain'
+            tempPasswordField: 'tempPasswordPlain',
+            emailBaseVariables
           })
         )
       ],

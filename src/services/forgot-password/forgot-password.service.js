@@ -8,6 +8,7 @@ module.exports = function () {
   const paginate = app.get('paginate')
   const outboundEmail = app.get('outboundEmail')
   const emailTemplates = app.get('postmarkTemplateIds')
+  const emailBaseVariables = app.get('postMarkVariables')
 
   const options = {
     name: 'forgot-password',
@@ -21,7 +22,7 @@ module.exports = function () {
   // Get our initialized service so that we can register hooks and filters
   const service = app.service('forgot-password')
 
-  service.hooks(hooks({ outboundEmail, emailTemplates }))
+  service.hooks(hooks({ outboundEmail, emailTemplates, emailBaseVariables }))
 
   if (service.filter) {
     service.filter(filters)

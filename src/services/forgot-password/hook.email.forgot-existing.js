@@ -21,15 +21,20 @@ module.exports = function (options = {}) {
       throw new Error(`A \`${options.tempPasswordField}\` was not found on the \`hook.data\` for the welcome email hook.`)
     }
 
+    const templateModalVars = Object.assign(
+      {
+        tempPassword: hook.data[options.tempPasswordField],
+        operatingSystem: (hook.params.userAgent && hook.params.userAgent.os.family) || '',
+        browserName: (hook.params.userAgent && `${hook.params.userAgent.family} ${hook.params.userAgent.major}`)
+      },
+      options.emailBaseVariables
+    )
+
     const message = {
       From: fromAddress,
       To: hook.data.email,
       TemplateId: options.TemplateId,
-      TemplateModel: {
-        tempPassword: hook.data[options.tempPasswordField],
-        operatingSystem: (hook.params.userAgent && hook.params.userAgent.os.family) || '',
-        browserName: (hook.params.userAgent && `${hook.params.userAgent.family} ${hook.params.userAgent.major}`)
-      }
+      TemplateModel: templateModalVars
     }
     return postmarkMessages.create(message).then(message => {
       return hook

@@ -22,7 +22,7 @@ module.exports = function (options = {}) {
       From: fromAddress,
       To: hook.data.email,
       TemplateId: options.TemplateId,
-      TemplateModel: {}
+      TemplateModel: options.emailBaseVariables
     }
     return postmarkMessages.create(message).then(message => {
       return hook

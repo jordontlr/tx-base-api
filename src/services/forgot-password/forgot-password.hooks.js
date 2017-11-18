@@ -7,7 +7,7 @@ const normalizeResponse = require('./hook.normalize-response')
 const sendForgotPasswordEmailForExistingUser = require('./hook.email.forgot-existing')
 const sendForgotPasswordEmailForMissingUser = require('./hook.email.forgot-missing')
 
-module.exports = function ({ outboundEmail, emailTemplates }) {
+module.exports = function ({ outboundEmail, emailTemplates, emailBaseVariables }) {
   return {
     before: {
       create: [
@@ -35,14 +35,16 @@ module.exports = function ({ outboundEmail, emailTemplates }) {
           sendForgotPasswordEmailForExistingUser({
             From: outboundEmail,
             TemplateId: emailTemplates.forgotPasswordExisting,
-            tempPasswordField: 'tempPasswordPlain'
+            tempPasswordField: 'tempPasswordPlain',
+            emailBaseVariables
           })
         ).else(
           iff(
             hook => hook.app.get('postmark').key !== 'POSTMARK_API_TEST',
             sendForgotPasswordEmailForMissingUser({
               From: outboundEmail,
-              TemplateId: emailTemplates.forgotPasswordNonExisting
+              TemplateId: emailTemplates.forgotPasswordNonExisting,
+              emailBaseVariables
             })
           )
         ),
