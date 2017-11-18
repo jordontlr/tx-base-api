@@ -1218,9 +1218,9 @@ feathers-authentication-signed@^2.0.9:
     feathers-hooks "^1.8.1"
     feathers-hooks-common "3.0.0-pre.1"
 
-feathers-authentication@^1.2.7:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/feathers-authentication/-/feathers-authentication-1.3.0.tgz#7f9e96eed87a70d90e498ca287df7d81bb07ef54"
+feathers-authentication@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/feathers-authentication/-/feathers-authentication-1.3.1.tgz#5cb3d0eeec56e5316b071b2cb327cc282a753c22"
   dependencies:
     debug "^3.1.0"
     feathers-authentication-client "^0.3.1"
@@ -1289,9 +1289,16 @@ feathers-hooks@^1.8.1:
     feathers-hooks-common "^2.0.3"
     uberproto "^1.2.0"
 
-feathers-hooks@^2.0.1, feathers-hooks@^2.0.4:
+feathers-hooks@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/feathers-hooks/-/feathers-hooks-2.1.1.tgz#b2fe6df79aabc23516f880169e53093f75667e88"
+  dependencies:
+    feathers-commons "^0.8.6"
+    uberproto "^1.2.0"
+
+feathers-hooks@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/feathers-hooks/-/feathers-hooks-2.1.2.tgz#f97af10f38621df816d754766c5c2e180b7df951"
   dependencies:
     feathers-commons "^0.8.6"
     uberproto "^1.2.0"
@@ -1332,11 +1339,20 @@ feathers-query-filters@^2.0.0, feathers-query-filters@^2.1.2:
   dependencies:
     feathers-commons "^0.8.0"
 
-feathers-rest@^1.5.2, feathers-rest@^1.8.0:
+feathers-rest@^1.5.2:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/feathers-rest/-/feathers-rest-1.8.0.tgz#3c03f1ea56adec940a8f9823d87a3aafeb9742a9"
   dependencies:
     debug "^2.2.0"
+    feathers-commons "^0.8.0"
+    feathers-errors "^2.0.1"
+    qs "^6.4.0"
+
+feathers-rest@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/feathers-rest/-/feathers-rest-1.8.1.tgz#3251a80ec4419763bc214dd8bb1f0a59d4ff9f35"
+  dependencies:
+    debug "^3.0.0"
     feathers-commons "^0.8.0"
     feathers-errors "^2.0.1"
     qs "^6.4.0"
@@ -1349,12 +1365,12 @@ feathers-socket-commons@^2.0.0, feathers-socket-commons@^2.3.1:
     feathers-commons "^0.8.0"
     feathers-errors "^2.2.0"
 
-feathers-socketio@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/feathers-socketio/-/feathers-socketio-2.0.0.tgz#ce62e33627deaad53279e4f9b67cdac0f2cf49de"
+feathers-socketio@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/feathers-socketio/-/feathers-socketio-2.0.1.tgz#7efa089c33569a3b09d09d6c077a5f6c257f4a52"
   dependencies:
     "@types/socket.io" "~1.4.27"
-    debug "^2.2.0"
+    debug "^3.0.0"
     feathers-socket-commons "^2.0.0"
     socket.io "^2.0.1"
     uberproto "^1.2.0"

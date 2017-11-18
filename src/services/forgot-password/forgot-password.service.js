@@ -11,7 +11,8 @@ module.exports = function () {
 
   const options = {
     name: 'forgot-password',
-    paginate
+    paginate,
+    app
   }
 
   // Initialize our service with any options it requires
