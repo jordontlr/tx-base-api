@@ -11,6 +11,7 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
 
     const password = hook.data.password
     const oldPassword = hook.data.oldPassword
+    const currentTimestamp = new Date().getTime()
     debug(`password = ${password}, oldPassword = ${oldPassword}`)
 
     const passwordToCheck = oldPassword || password
@@ -23,6 +24,14 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
 
     if (!passwordToCheck) {
       return Promise.reject(new errors.BadRequest('Please provide a password'))
+    }
+
+    if (!user.tempPasswordTimestampExpiry) {
+      return Promise.reject(new errors.BadRequest('Please provide an expiry'))
+    }
+
+    if (user.tempPasswordTimestampExpiry < currentTimestamp) {
+      return Promise.reject(new errors.BadRequest('Temp password has expired'))
     }
 
     return comparePassword(passwordToCheck, user.password)
