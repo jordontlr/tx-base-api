@@ -9,7 +9,7 @@ const restrict = [
     idField: '_id',
     ownerField: '_id'
   }),
-  setUpdatedAt
+  setUpdatedAt()
 ]
 
 const isExistingUser = require('./hook.is-existing-user')
