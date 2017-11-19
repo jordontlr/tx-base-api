@@ -61,9 +61,8 @@ module.exports = function (app) {
           })
         ),
         iff(
-          hook => (hook.data && hook.data.email && hook.data.emailCode),
+          hook => (hook.data && hook.data.emailCode),
           getUser(),
-          checkPassword(),
           checkEmailCode()
         )
       ],
