@@ -1,13 +1,15 @@
 const { authenticate } = require('feathers-authentication').hooks
 const { restrictToOwner } = require('feathers-authentication-hooks')
 const { hashPassword } = require('feathers-authentication-local').hooks
-const { iff, when, discard } = require('feathers-hooks-common') // disallow, isProvider, lowerCase
+const { iff, when, discard, setUpdatedAt, setCreatedAt } = require('feathers-hooks-common')
+
 const restrict = [
   authenticate('jwt'),
   restrictToOwner({
     idField: '_id',
     ownerField: '_id'
-  })
+  }),
+  setUpdatedAt
 ]
 
 const isExistingUser = require('./hook.is-existing-user')
@@ -37,7 +39,8 @@ module.exports = function (app) {
           // If the user has passed a password for account creation, delete it.
           discard('password'),
           createTemporaryPassword({hashedPasswordField: 'tempPassword', plainPasswordField: 'tempPasswordPlain'}),
-          hashPassword({passwordField: 'tempPassword', timeStampField: 'tempPasswordCreatedAt'})
+          hashPassword({passwordField: 'tempPassword', timeStampField: 'tempPasswordCreatedAt'}),
+          setCreatedAt, setUpdatedAt
         )
       ],
       update: [...restrict, hashPassword()],
