@@ -1,5 +1,4 @@
 const assert = require('assert')
-const { randomBytes } = require('crypto')
 const createEmailCode = require('../../src/services/users/hook.create-email-code')
 
 describe('\'createEmailCode\' hook', () => {
