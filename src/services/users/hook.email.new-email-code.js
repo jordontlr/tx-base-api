@@ -13,13 +13,18 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
       throw new Error(`A \`${options.emailCode}\` was not found on the \`hook.data\` for the welcome email hook.`)
     }
 
+    const templateModalVars = Object.assign(
+      {
+        emailCode: hook.data[options.emailCode]
+      },
+      options.emailBaseVariables
+    )
+
     const message = {
       From: fromAddress,
       To: hook.data.newEmail,
       TemplateId: options.TemplateId,
-      TemplateModel: {
-        emailCode: hook.data[options.emailCode]
-      }
+      TemplateModel: templateModalVars
     }
     return postmarkMessages.create(message).then(message => {
       return hook

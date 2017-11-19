@@ -59,7 +59,8 @@ module.exports = function (app) {
           createEmailCode(),
           sendEmailCode({
             From: outboundEmail,
-            TemplateId: emailTemplates.changeEmail
+            TemplateId: emailTemplates.changeEmail,
+            emailBaseVariables
           })
         ),
         iff(
