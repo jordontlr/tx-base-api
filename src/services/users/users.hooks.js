@@ -1,7 +1,7 @@
 const { authenticate } = require('feathers-authentication').hooks
 const { restrictToOwner } = require('feathers-authentication-hooks')
 const { hashPassword } = require('feathers-authentication-local').hooks
-const { iff, when, discard, remove } = require('feathers-hooks-common') // disallow, isProvider, lowerCase
+const { iff, when, discard } = require('feathers-hooks-common') // disallow, isProvider, lowerCase
 const restrict = [
   authenticate('jwt'),
   restrictToOwner({
@@ -75,8 +75,7 @@ module.exports = function (app) {
       all: [
         when(
           hook => hook.params.provider,
-          discard('password'),
-          discard('tempPassword')
+          discard(['password', 'tempPassword', 'emailCode'])
         )
       ],
       find: [],
@@ -99,12 +98,7 @@ module.exports = function (app) {
         )
       ],
       update: [],
-      patch: [
-        iff(
-          hook => (hook.data && hook.data.email && hook.data.emailCode),
-          remove('emailCode')
-        )
-      ],
+      patch: [],
       remove: []
     },
 
