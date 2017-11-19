@@ -3,58 +3,14 @@ const checkPassword = require('../../src/services/users/hook.check-password')
 
 const passwordPlain = '123'
 const passwordHash = '$2a$12$2SGQ2sxmNl8c2U/zhsdno.zJAMNT7OVkZfC3vquZze09IAQl43d8.'
-const pastTimestamp = new Date().getTime() - 100000
-const futureTimestamp = new Date().getTime() + 100000
 
 describe('\'checkPassword\' hook', () => {
-  it('should reject with temp-password-expired message', () => {
-    // A mock hook object
-    const mock = {
-      data: { password: '111', oldPassword: passwordPlain },
-      params: {
-        user: {
-          password: passwordHash,
-          tempPasswordTimestampExpiry: pastTimestamp
-        }
-      }
-    }
-    // Initialize our hook with no options
-    const hook = checkPassword()
-
-    return hook(mock).then(() => {
-      assert.ok(false, 'should reject instead')
-    }).catch(err => {
-      assert.equal(err.message, 'Temp password has expired')
-    })
-  })
-
-  it('should reject with provide-an-expiry message', () => {
-    // A mock hook object
-    const mock = {
-      data: { password: '111', oldPassword: passwordPlain },
-      params: {
-        user: { password: passwordHash }
-      }
-    }
-    // Initialize our hook with no options
-    const hook = checkPassword()
-
-    return hook(mock).then(() => {
-      assert.ok(false, 'should reject instead')
-    }).catch(err => {
-      assert.equal(err.message, 'Please provide an expiry')
-    })
-  })
-
   it('should reject with provide-a-password message', () => {
     // A mock hook object
     const mock = {
       data: {},
       params: {
-        user: {
-          password: 'password hash',
-          tempPasswordTimestampExpiry: futureTimestamp
-        }
+        user: { password: 'password hash' }
       }
     }
     // Initialize our hook with no options
@@ -71,10 +27,7 @@ describe('\'checkPassword\' hook', () => {
     const mock = {
       data: { password: '111' },
       params: {
-        user: {
-          password: passwordHash,
-          tempPasswordTimestampExpiry: futureTimestamp
-        }
+        user: { password: passwordHash }
       }
     }
     const hook = checkPassword()
@@ -94,8 +47,7 @@ describe('\'checkPassword\' hook', () => {
       },
       params: {
         user: {
-          password: passwordHash,
-          tempPasswordTimestampExpiry: futureTimestamp
+          password: passwordHash
         }
       }
     }
@@ -127,10 +79,7 @@ describe('\'checkPassword\' hook', () => {
     const mock = {
       data: { password: '111', oldPassword: passwordPlain },
       params: {
-        user: {
-          password: passwordHash,
-          tempPasswordTimestampExpiry: futureTimestamp
-        }
+        user: { password: passwordHash }
       }
     }
     const hook = checkPassword()
@@ -145,10 +94,7 @@ describe('\'checkPassword\' hook', () => {
     const mock = {
       data: { password: passwordPlain, email: 'user@mail.com' },
       params: {
-        user: {
-          password: passwordHash,
-          tempPasswordTimestampExpiry: futureTimestamp
-        }
+        user: { password: passwordHash }
       }
     }
     const hook = checkPassword()
