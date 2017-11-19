@@ -9,7 +9,7 @@ module.exports = function (options = {}) {
 
   return hook => {
     const postmarkMessages = hook.app.service('postmark-messages')
-    const fromAddress = hook.data.From || options.From
+    const fromAddress = options.From
 
     if (!fromAddress) {
       throw new Error('A `From` address must be configured for the welcome email hook. Or pass the email in the `hook.data`.')
