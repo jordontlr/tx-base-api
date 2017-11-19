@@ -7,7 +7,7 @@ const restrict = [
   restrictToRoles({
     roles: ['admin', 'super-admin', 'manager', 'editor']
   }),
-  setUpdatedAt
+  setUpdatedAt()
 ]
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
     all: [ when(hook => hook.method !== 'find', softDelete()) ],
     find: [],
     get: [],
-    create: [ authenticate('jwt'), setCreatedAt, setUpdatedAt ],
+    create: [ authenticate('jwt'), setCreatedAt(), setUpdatedAt() ],
     update: [ ...restrict ],
     patch: [ ...restrict ],
     remove: [ ...restrict ]
