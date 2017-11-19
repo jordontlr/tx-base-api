@@ -5,7 +5,7 @@ const { randomBytes } = require('crypto')
 module.exports = function (options) {
   return hook => {
     // create a random string which is the user's new email address confirmation code
-    hook.data[options.emailCode] = randomBytes(5).toString('hex').toUpperCase()
+    hook.data.emailCode = randomBytes(5).toString('hex').toUpperCase()
 
     return hook
   }

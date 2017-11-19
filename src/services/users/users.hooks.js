@@ -18,6 +18,7 @@ const getUser = require('./hook.get-user')
 const checkPassword = require('./hook.check-password')
 const sendEmailCode = require('./hook.email.new-email-code')
 const checkEmailCode = require('./hook.check-email-code')
+const createEmailCode = require('./hook.create-email-code')
 
 module.exports = function (app) {
   const outboundEmail = app.get('outboundEmail')
@@ -55,6 +56,7 @@ module.exports = function (app) {
         ),
         iff(
           hook => (hook.data && hook.data.newEmail && hook.data.password),
+          createEmailCode(),
           sendEmailCode({
             From: outboundEmail,
             TemplateId: emailTemplates.changeEmail

@@ -9,7 +9,7 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
     if (!options.TemplateId) {
       throw new Error('A `TemplateId` must be configured for the welcome email hook.')
     }
-    if (!hook.data[options.emailCode]) {
+    if (!hook.data.emailCode) {
       throw new Error(`A \`${options.emailCode}\` was not found on the \`hook.data\` for the welcome email hook.`)
     }
 
