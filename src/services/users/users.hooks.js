@@ -24,6 +24,7 @@ module.exports = function (app) {
   const outboundEmail = app.get('outboundEmail')
   const emailTemplates = app.get('postmarkTemplateIds')
   const emailBaseVariables = app.get('postMarkVariables')
+  const tempPasswordAddExpiry = app.get('tempPasswordExpiry')
 
   return {
     before: {
@@ -36,7 +37,7 @@ module.exports = function (app) {
           hook => !hook.params.existingUser,
           // If the user has passed a password for account creation, delete it.
           discard('password'),
-          createTemporaryPassword({hashedPasswordField: 'tempPassword', plainPasswordField: 'tempPasswordPlain'}),
+          createTemporaryPassword({hashedPasswordField: 'tempPassword', plainPasswordField: 'tempPasswordPlain', tempPasswordAddExpiry}),
           hashPassword({passwordField: 'tempPassword', timeStampField: 'tempPasswordCreatedAt'})
         )
       ],

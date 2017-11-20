@@ -4,6 +4,8 @@ const { hashPassword } = require('feathers-authentication-local').hooks
 // const hashPassword = require('feathers-authentication-local/lib/utils/hash')
 // const app = require('../src/app')
 const MyVerifier = require('../src/authentication-verifier')
+const pastTimestamp = new Date().getTime() - 100000
+const futureTimestamp = new Date().getTime() + 100000
 
 const app = feathers()
 
@@ -14,9 +16,53 @@ describe('MyVerifier', function () {
   }
   const entity = {
     password: '123',
-    tmpPassword: '456'
+    tmpPassword: '456',
+    tempPasswordTimestampExpiry: futureTimestamp
   }
   const verifier = new MyVerifier(app, options)
+
+  it('checks the expiry field is there', function () {
+    const password = '123'
+    const hook = {
+      type: 'before',
+      app,
+      data: {
+        password: '123',
+        tmpPassword: '456'
+      }
+    }
+    return hashPassword()(hook).then(hook => {
+      return verifier._comparePassword(hook.data, password)
+    }).then(() => {
+      assert.ok(false, 'should throw an error instead')
+    })
+    // Note: must check the exact error message.
+      .catch(err => {
+        assert.equal(err.message, 'Temp password expiry missing!')
+      })
+  })
+
+  it('checks if the temp password has expired', function () {
+    const password = '123'
+    const hook = {
+      type: 'before',
+      app,
+      data: {
+        password: '123',
+        tmpPassword: '456',
+        tempPasswordTimestampExpiry: pastTimestamp
+      }
+    }
+    return hashPassword()(hook).then(hook => {
+      return verifier._comparePassword(hook.data, password)
+    }).then(() => {
+      assert.ok(false, 'should throw an error instead')
+    })
+    // Note: must check the exact error message.
+      .catch(err => {
+        assert.equal(err.message, 'Temp password has expired!')
+      })
+  })
 
   it('checks the main password field', function () {
     const password = '123'
@@ -51,7 +97,10 @@ describe('MyVerifier', function () {
     const hook = {
       type: 'before',
       app,
-      data: {tmpPassword: '456'}
+      data: {
+        tmpPassword: '456',
+        tempPasswordTimestampExpiry: futureTimestamp
+      }
     }
     return hashPassword({passwordField: 'tmpPassword'})(hook).then(hook => {
       return verifier._comparePassword(hook.data, password)

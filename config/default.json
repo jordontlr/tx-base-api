@@ -71,7 +71,6 @@
     }
   },
   "mongodb": "mongodb://localhost:27017/tx_base_api",
-
   "postmark": {
     "key": "65cd34a3-81af-48c0-ad5f-67400a7fbcc6"
   },
@@ -93,5 +92,6 @@
     "secondaryColour": "#f0ad4e",
     "domain": "https://txuniverse.com",
     "companyAddress": "Toronto, On, Canada"
-  }
+  },
+  "tempPasswordExpiry": 172800000
 }
