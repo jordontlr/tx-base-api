@@ -3,6 +3,7 @@ const get = require('lodash').get
 const Debug = require('debug')
 const debug = Debug('feathers-authentication-local-tmp:_comparePassword')
 const comparePassword = require('./utils/compare-password')
+const currentTimestamp = new Date().getTime()
 
 class TmpPswdVerifier extends Verifier {
   _comparePassword (entity, password) {
@@ -18,6 +19,14 @@ class TmpPswdVerifier extends Verifier {
       return Promise.reject(
         new Error(`'${this.options.entity}' record in the database is missing both '${passwordField}' and '${tmpPasswordField}'`)
       )
+    }
+
+    if (!entity.tempPasswordTimestampExpiry) {
+      return Promise.reject(new Error('Temp password expiry missing!'))
+    }
+
+    if (entity.tempPasswordTimestampExpiry < currentTimestamp) {
+      return Promise.reject(new Error('Temp password has expired!'))
     }
 
     debug('Verifying password')
