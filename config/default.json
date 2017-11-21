@@ -72,7 +72,7 @@
   },
   "mongodb": "mongodb://localhost:27017/tx_base_api",
   "postmark": {
-    "key": "65cd34a3-81af-48c0-ad5f-67400a7fbcc6"
+    "key": "POST_MARK_API_KEY"
   },
   "outboundEmail": "Tx Base Website <info@txnotify.com>",
   "postmarkTemplateIds": {
