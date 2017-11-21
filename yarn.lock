@@ -1703,9 +1703,9 @@ hoek@4.x.x:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.0.tgz#72d9d0754f7fe25ca2d01ad8f8f9a9449a89526d"
 
-hooks-fixed@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/hooks-fixed/-/hooks-fixed-2.0.0.tgz#a01d894d52ac7f6599bbb1f63dfc9c411df70cba"
+hooks-fixed@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/hooks-fixed/-/hooks-fixed-2.0.2.tgz#20076daa07e77d8a6106883ce3f1722e051140b0"
 
 hosted-git-info@^2.1.4:
   version "2.5.0"
@@ -2234,7 +2234,7 @@ lodash.create@3.1.1:
     lodash._basecreate "^3.0.0"
     lodash._isiterateecall "^3.0.0"
 
-lodash.get@^4.4.2:
+lodash.get@4.4.2, lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
 
@@ -2465,14 +2465,15 @@ mongodb@2.2.33, mongodb@^2.2.31:
     mongodb-core "2.1.17"
     readable-stream "2.2.7"
 
-mongoose@^4.11.13:
-  version "4.12.4"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.12.4.tgz#502a2c037376a6c6356eee89128e75653612127c"
+mongoose@^4.13.4:
+  version "4.13.4"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.13.4.tgz#31afd5fe865911678adbc892c4d3f66d0a821dfb"
   dependencies:
     async "2.1.4"
     bson "~1.0.4"
-    hooks-fixed "2.0.0"
+    hooks-fixed "2.0.2"
     kareem "1.5.0"
+    lodash.get "4.4.2"
     mongodb "2.2.33"
     mpath "0.3.0"
     mpromise "0.5.5"
