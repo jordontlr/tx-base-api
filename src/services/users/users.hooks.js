@@ -1,7 +1,7 @@
 const { authenticate } = require('feathers-authentication').hooks
 const { restrictToOwner } = require('feathers-authentication-hooks')
 const { hashPassword } = require('feathers-authentication-local').hooks
-const { iff, discard, isProvider } = require('feathers-hooks-common') // disallow, isProvider, lowerCase
+const { iff, discard, isProvider, setUpdatedAt, setCreatedAt } = require('feathers-hooks-common') // disallow, isProvider, lowerCase
 const restrict = [
   authenticate('jwt'),
   restrictToOwner({
@@ -25,6 +25,7 @@ module.exports = function (app) {
   const outboundEmail = app.get('outboundEmail')
   const emailTemplates = app.get('postmarkTemplateIds')
   const emailBaseVariables = app.get('postMarkVariables')
+  const tempPasswordAddExpiry = app.get('tempPasswordExpiry')
 
   return {
     before: {
@@ -36,8 +37,8 @@ module.exports = function (app) {
         iff(
           hook => !hook.params.existingUser,
           // If the user has passed a password for account creation, delete it.
-          discard('password'),
-          createTemporaryPassword({hashedPasswordField: 'tempPassword', plainPasswordField: 'tempPasswordPlain'}),
+          discard('password'), setCreatedAt(), setUpdatedAt(),
+          createTemporaryPassword({hashedPasswordField: 'tempPassword', plainPasswordField: 'tempPasswordPlain', tempPasswordAddExpiry}),
           hashPassword({passwordField: 'tempPassword', timeStampField: 'tempPasswordCreatedAt'})
         )
       ],
