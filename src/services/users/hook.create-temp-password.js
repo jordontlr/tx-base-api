@@ -18,8 +18,6 @@ module.exports = function (options) {
     // Keep plain password for email:
     hook.data[options.plainPasswordField] = tempPassword
 
-    hook.data.tempPasswordTimestampExpiry = new Date().getTime() + options.tempPasswordAddExpiry
-
     return hook
   }
 }

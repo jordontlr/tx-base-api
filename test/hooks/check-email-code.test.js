@@ -48,7 +48,7 @@ describe('\'checkEmailCode\' hook', () => {
     return hook(mock).then(result => {
       assert.ok(false)
     }).catch(error => {
-      assert.equal(error.message, 'Please provide the correct email code.')
+      assert.equal(error.message, 'Please provide the correct email code')
     })
   })
 
