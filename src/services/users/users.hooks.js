@@ -7,7 +7,8 @@ const restrict = [
   restrictToOwner({
     idField: '_id',
     ownerField: '_id'
-  })
+  }),
+  setUpdatedAt()
 ]
 // const log = (msg, obj) => hook => ((obj ? console.log(msg, obj) : console.log(msg)), hook)
 
