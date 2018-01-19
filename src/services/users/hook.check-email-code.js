@@ -9,7 +9,7 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
 
     const emailCode = hook.data.emailCode
     if (!emailCode || emailCode !== user.emailCode) {
-      return Promise.reject(new errors.BadRequest('Please provide the correct email code.'))
+      return Promise.reject(new errors.BadRequest('Please provide the correct email code'))
     }
 
     hook.data.email = user.newEmail

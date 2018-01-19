@@ -1,8 +1,7 @@
 const { authenticate } = require('feathers-authentication').hooks
 const { restrictToOwner } = require('feathers-authentication-hooks')
 const { hashPassword } = require('feathers-authentication-local').hooks
-const { iff, when, discard, setUpdatedAt, setCreatedAt } = require('feathers-hooks-common')
-
+const { iff, discard, isProvider, setUpdatedAt, setCreatedAt } = require('feathers-hooks-common') // disallow, isProvider, lowerCase
 const restrict = [
   authenticate('jwt'),
   restrictToOwner({
@@ -11,6 +10,7 @@ const restrict = [
   }),
   setUpdatedAt()
 ]
+// const log = (msg, obj) => hook => ((obj ? console.log(msg, obj) : console.log(msg)), hook)
 
 const isExistingUser = require('./hook.is-existing-user')
 const createTemporaryPassword = require('./hook.create-temp-password')
@@ -43,11 +43,25 @@ module.exports = function (app) {
           hashPassword({passwordField: 'tempPassword', timeStampField: 'tempPasswordCreatedAt'})
         )
       ],
-      update: [...restrict, hashPassword()],
+      update: [
+        context => {
+          return context.service.patch(context.id, context.data, context.params)
+            .then(result => {
+              context.result = result
+              return context
+            })
+        }
+      ],
       patch: [
         ...restrict,
+        // Do not allow changing user's password and email outside of the special cases down below.
         iff(
-          hook => hook.data && hook.data.password,
+          hook => (hook.data && hook.data.password && !(hook.data.oldPassword || hook.data.newEmail || hook.data.emailCode)),
+          discard('password', 'email')
+        ),
+        // Case: change password.
+        iff(
+          hook => hook.data && hook.data.password && hook.data.oldPassword,
           getUser(),
           checkPassword(),
           hashPassword(),
@@ -57,19 +71,33 @@ module.exports = function (app) {
             return hook
           }
         ),
+        // Case change email.
         iff(
-          hook => (hook.data && hook.data.newEmail && hook.data.password),
+          // generate emailCode and save newEmail.
+          hook => (hook.data && hook.data.newEmail && hook.data.password && !hook.data.emailCode),
+          getUser(),
+          checkPassword(),
+          // Make sure both pswd and email are not patched:
+          discard('password', 'email'),
           createEmailCode(),
           sendEmailCode({
             From: outboundEmail,
             TemplateId: emailTemplates.changeEmail,
             emailBaseVariables
           })
-        ),
-        iff(
-          hook => (hook.data && hook.data.emailCode),
-          getUser(),
-          checkEmailCode()
+        ).else(
+          // Check pswd and emailCode and set email=newEmail.
+          iff(
+            hook => (hook.data && hook.data.emailCode),
+            getUser(),
+            checkPassword(),
+            checkEmailCode(),
+            hook => {
+              hook.data.email = hook.params.user.newEmail
+              hook.data.emailCode = ''
+              hook.data.newEmail = ''
+            }
+          )
         )
       ],
       remove: [...restrict]
@@ -77,9 +105,9 @@ module.exports = function (app) {
 
     after: {
       all: [
-        when(
-          hook => hook.params.provider,
-          discard(['password', 'tempPassword', 'emailCode'])
+        iff(
+          isProvider('external'),
+          discard('password', 'tempPassword', 'emailCode')
         )
       ],
       find: [],
@@ -117,3 +145,5 @@ module.exports = function (app) {
     }
   }
 }
+
+module.exports.restrict = restrict

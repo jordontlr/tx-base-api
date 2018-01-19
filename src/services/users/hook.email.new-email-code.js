@@ -1,5 +1,10 @@
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return function sendEmailCode (hook) {
+    if (!hook.app.services) {
+      console.warn(`hook.sendEmailCode SKIP since no hook.app.services is available (are you testing?)`)
+      return hook
+    }
+
     const postmarkMessages = hook.app.service('postmark-messages')
     const fromAddress = options.From
 
@@ -10,12 +15,12 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
       throw new Error('A `TemplateId` must be configured for the welcome email hook.')
     }
     if (!hook.data.emailCode) {
-      throw new Error(`A \`${options.emailCode}\` was not found on the \`hook.data\` for the welcome email hook.`)
+      throw new Error(`A \`emailCode\` was not found on the \`hook.data\` for the welcome email hook.`)
     }
 
     const templateModalVars = Object.assign(
       {
-        emailCode: hook.data[options.emailCode]
+        emailVerificationCode: hook.data.emailCode
       },
       options.emailBaseVariables
     )
@@ -26,6 +31,7 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
       TemplateId: options.TemplateId,
       TemplateModel: templateModalVars
     }
+    console.log(`hook sending email with emailCode=${hook.data.emailCode}`)
     return postmarkMessages.create(message).then(message => {
       return hook
     })

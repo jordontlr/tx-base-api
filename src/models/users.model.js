@@ -13,6 +13,11 @@ module.exports = function (app) {
     tempPassword: { type: String },
     tempPasswordCreatedAt: { type: Date },
     isNewUser: { type: Boolean, default: true },
+
+    // For changing email:
+    emailCode: { type: String },
+    newEmail: { type: String },
+
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   }, {
