@@ -18,7 +18,7 @@
       "header": {
         "type": "access"
       },
-      "audience": "https://tx-notify.com",
+      "audience": "https://txbasewebsite.com",
       "subject": "anonymous",
       "issuer": "feathers",
       "algorithm": "HS256",
@@ -75,23 +75,23 @@
   "postmark": {
     "key": "POST_MARK_API_KEY"
   },
-  "outboundEmail": "Tx Base Website <info@txnotify.com>",
+  "outboundEmail": "Tx Base Website <info@txbasewebsite.com>",
   "postmarkTemplateIds": {
-    "welcome": 3362207,
-    "changeEmail": 3362202,
-    "duplicateSignup": 3362205,
-    "forgotPasswordExisting": 3362203,
-    "forgotPasswordNonExisting": 3362183,
-    "securityAlertFailedLogins": 3362204,
-    "supportRequestNoAccount": 3362184,
-    "supportRequestReceived": 3362206,
-    "supportRequestResponse": 3362185
+    "welcome": 4689461,
+    "changeEmail": 4689465,
+    "duplicateSignup": 4689463,
+    "forgotPasswordExisting": 4689524,
+    "forgotPasswordNonExisting": 4689464,
+    "securityAlertFailedLogins": 4689523,
+    "supportRequestNoAccount": 4689522,
+    "supportRequestReceived": 4689521,
+    "supportRequestResponse": 4689462
   },
   "postMarkVariables": {
     "companyName": "Tx Base Website",
     "primaryColour": "#f0ad4e",
     "secondaryColour": "#f0ad4e",
-    "domain": "https://txuniverse.com",
+    "domain": "https://txbasewebsite.com",
     "companyAddress": "Toronto, On, Canada"
   },
   "tempPasswordExpiry": 172800000
