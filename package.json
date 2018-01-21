@@ -22,6 +22,8 @@
     "mocha": "nyc mocha -u tdd --timeout 999999 --colors test/test.js",
     "lint": "standard --fix",
     "start": "node src/",
+    "staging": "npm run release:staging:patch",
+    "release:staging:patch": "npm test && npm run build && npm version patch && make release-staging",
     "test": "npm run lint && NODE_ENV=ci npm run mocha",
     "test-local": "NODE_ENV=testing npm run lint && npm run mocha"
   },
