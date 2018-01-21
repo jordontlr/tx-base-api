@@ -70,7 +70,8 @@
       "secure": false
     }
   },
-  "mongodb": "mongodb://localhost:27017/tx_base_api",
+  "mongodb": "MONGODB_URI",
+  "mongodb_local": "mongodb://localhost:27017/tx_base_api",
   "postmark": {
     "key": "POST_MARK_API_KEY"
   },
