@@ -27,8 +27,8 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
 
     return comparePassword(passwordToCheck, user.password)
       .catch(() => {
-        debug(`Password failed. Trying tempPassword...`)
-        return comparePassword(passwordToCheck, user.tempPassword)
+        debug(`Password failed. Trying tmpPassword...`)
+        return comparePassword(passwordToCheck, user.tmpPassword)
       })
       .then(() => {
         debug('Password OK')

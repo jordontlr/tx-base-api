@@ -15,7 +15,7 @@ module.exports = function () {
   app.configure(authentication(config))
   app.configure(jwt())
   app.configure(local({
-    tmpPasswordField: 'tempPassword',
+    tmpPasswordField: 'tmpPassword',
     Verifier: MyVerifier
   }))
 
@@ -51,12 +51,12 @@ module.exports = function () {
         // Return user to avoid extra request.
         // Add `tmpPasswordUsed` flag if necessary.
         hook => {
-          if (hook.params.user.tmpPasswordUsed && hook.params.user.tempPassword) {
+          if (hook.params.user.tmpPasswordUsed && hook.params.user.tmpPassword) {
             hook.result.tmpPasswordUsed = true
           }
           hook.result.user = hook.params.user
           delete hook.result.user.password
-          delete hook.result.user.tempPassword
+          delete hook.result.user.tmpPassword
           delete hook.result.user.tmpPasswordUsed
           return hook
         }

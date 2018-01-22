@@ -1,7 +1,7 @@
 const defaults = {
   From: undefined,
   TemplateId: undefined,
-  tempPasswordField: undefined
+  tmpPasswordField: undefined
 }
 
 module.exports = function (options = {}) {
@@ -17,13 +17,13 @@ module.exports = function (options = {}) {
     if (!options.TemplateId) {
       throw new Error('A `TemplateId` must be configured for the welcome email hook.')
     }
-    if (!hook.data[options.tempPasswordField]) {
-      throw new Error(`A \`${options.tempPasswordField}\` was not found on the \`hook.data\` for the welcome email hook.`)
+    if (!hook.data[options.tmpPasswordField]) {
+      throw new Error(`A \`${options.tmpPasswordField}\` was not found on the \`hook.data\` for the welcome email hook.`)
     }
 
     const templateModalVars = Object.assign(
       {
-        tempPassword: hook.data[options.tempPasswordField],
+        tmpPassword: hook.data[options.tmpPasswordField],
         operatingSystem: (hook.params.userAgent && hook.params.userAgent.os.family) || '',
         browserName: (hook.params.userAgent && `${hook.params.userAgent.family} ${hook.params.userAgent.major}`)
       },

@@ -10,9 +10,9 @@ module.exports = function (app) {
     email: { type: String, unique: true },
     password: { type: String },
     passwordCreatedAt: { type: Date },
-    tempPassword: { type: String },
+    tmpPassword: { type: String },
     tmpPasswordTimestampExpiry: { type: Date },
-    tempPasswordCreatedAt: { type: Date },
+    tmpPasswordCreatedAt: { type: Date },
     isNewUser: { type: Boolean, default: true },
 
     // For changing email:

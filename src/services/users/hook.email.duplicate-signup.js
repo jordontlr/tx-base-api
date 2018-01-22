@@ -1,7 +1,7 @@
 const defaults = {
   From: undefined,
   TemplateId: undefined,
-  tempPasswordField: 'tempPassword'
+  tmpPasswordField: 'tmpPassword'
 }
 
 module.exports = function (options = {}) {

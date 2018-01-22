@@ -2,7 +2,7 @@ const { iff } = require('feathers-hooks-common')
 const { hashPassword } = require('feathers-authentication-local').hooks
 
 const findUser = require('./hook.find-user')
-const createTempPassword = require('../users/hook.create-temp-password')
+const createTmpPassword = require('../users/hook.create-tmp-password')
 const normalizeResponse = require('./hook.normalize-response')
 const sendForgotPasswordEmailForExistingUser = require('./hook.email.forgot-existing')
 const sendForgotPasswordEmailForMissingUser = require('./hook.email.forgot-missing')
@@ -14,13 +14,13 @@ module.exports = function ({ outboundEmail, emailTemplates, emailBaseVariables }
         findUser(),
         iff(
           hook => hook.params.user,
-          createTempPassword({
-            hashedPasswordField: 'tempPassword',
-            plainPasswordField: 'tempPasswordPlain'
+          createTmpPassword({
+            hashedPasswordField: 'tmpPassword',
+            plainPasswordField: 'tmpPasswordPlain'
           }),
           hashPassword({
-            passwordField: 'tempPassword',
-            timeStampField: 'tempPasswordCreatedAt'
+            passwordField: 'tmpPassword',
+            timeStampField: 'tmpPasswordCreatedAt'
           })
         ).else(
           normalizeResponse()
@@ -35,7 +35,7 @@ module.exports = function ({ outboundEmail, emailTemplates, emailBaseVariables }
           sendForgotPasswordEmailForExistingUser({
             From: outboundEmail,
             TemplateId: emailTemplates.forgotPasswordExisting,
-            tempPasswordField: 'tempPasswordPlain',
+            tmpPasswordField: 'tmpPasswordPlain',
             emailBaseVariables
           })
         ).else(

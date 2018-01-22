@@ -13,7 +13,7 @@ const restrict = [
 // const log = (msg, obj) => hook => ((obj ? console.log(msg, obj) : console.log(msg)), hook)
 
 const isExistingUser = require('./hook.is-existing-user')
-const createTemporaryPassword = require('./hook.create-temp-password')
+const createTemporaryPassword = require('./hook.create-tmp-password')
 const sendWelcomeEmail = require('./hook.email.welcome')
 const sendDuplicateSignupEmail = require('./hook.email.duplicate-signup')
 const getUser = require('./hook.get-user')
@@ -26,7 +26,7 @@ module.exports = function (app) {
   const outboundEmail = app.get('outboundEmail')
   const emailTemplates = app.get('postmarkTemplateIds')
   const emailBaseVariables = app.get('postMarkVariables')
-  const tempPasswordAddExpiry = app.get('tempPasswordExpiry')
+  const tmpPasswordAddExpiry = app.get('tmpPasswordExpiry')
 
   return {
     before: {
@@ -39,8 +39,8 @@ module.exports = function (app) {
           hook => !hook.params.existingUser,
           // If the user has passed a password for account creation, delete it.
           discard('password'), setCreatedAt(), setUpdatedAt(),
-          createTemporaryPassword({hashedPasswordField: 'tempPassword', plainPasswordField: 'tempPasswordPlain', tempPasswordAddExpiry}),
-          hashPassword({passwordField: 'tempPassword', timeStampField: 'tempPasswordCreatedAt'})
+          createTemporaryPassword({hashedPasswordField: 'tmpPassword', plainPasswordField: 'tmpPasswordPlain', tmpPasswordAddExpiry}),
+          hashPassword({passwordField: 'tmpPassword', timeStampField: 'tmpPasswordCreatedAt'})
         )
       ],
       update: [
@@ -65,9 +65,9 @@ module.exports = function (app) {
           getUser(),
           checkPassword(),
           hashPassword(),
-          // If password gets changed remove the tempPassword:
+          // If password gets changed remove the tmpPassword:
           hook => {
-            hook.data.tempPassword = ''
+            hook.data.tmpPassword = ''
             return hook
           }
         ),
@@ -107,7 +107,7 @@ module.exports = function (app) {
       all: [
         iff(
           isProvider('external'),
-          discard('password', 'tempPassword', 'emailCode')
+          discard('password', 'tmpPassword', 'emailCode')
         )
       ],
       find: [],
@@ -124,7 +124,7 @@ module.exports = function (app) {
           sendWelcomeEmail({
             From: outboundEmail,
             TemplateId: emailTemplates.welcome,
-            tempPasswordField: 'tempPasswordPlain',
+            tmpPasswordField: 'tmpPasswordPlain',
             emailBaseVariables
           })
         )
