@@ -123,4 +123,20 @@ describe('MyVerifier', function () {
         assert.notEqual(err.message.search('record in the database is missing both'), -1, 'should reject with the correct message')
       })
   })
+
+  it('checks the main password when tmp password is not there', function () {
+    const password = '123'
+    const hook = {
+      type: 'before',
+      app,
+      data: {
+        password: '123'
+      }
+    }
+    return hashPassword()(hook).then(hook => {
+      return verifier._comparePassword(hook.data, password)
+    }).then(() => {
+      assert.ok('Password was OK')
+    })
+  })
 })
