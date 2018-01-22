@@ -14,6 +14,7 @@ module.exports = function (app) {
     tmpPasswordTimestampExpiry: { type: Date },
     tmpPasswordCreatedAt: { type: Date },
     isNewUser: { type: Boolean, default: true },
+    isAdmin: { type: Boolean, default: false },
 
     // For changing email:
     emailCode: { type: String },
