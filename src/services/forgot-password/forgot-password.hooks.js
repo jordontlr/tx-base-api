@@ -7,7 +7,9 @@ const normalizeResponse = require('./hook.normalize-response')
 const sendForgotPasswordEmailForExistingUser = require('./hook.email.forgot-existing')
 const sendForgotPasswordEmailForMissingUser = require('./hook.email.forgot-missing')
 
-module.exports = function ({ outboundEmail, emailTemplates, emailBaseVariables }) {
+module.exports = function ({ app, outboundEmail, emailTemplates, emailBaseVariables }) {
+  const tmpPasswordAddExpiry = app.get('tmpPasswordExpiry')
+
   return {
     before: {
       create: [
@@ -16,7 +18,8 @@ module.exports = function ({ outboundEmail, emailTemplates, emailBaseVariables }
           hook => hook.params.user,
           createTmpPassword({
             hashedPasswordField: 'tmpPassword',
-            plainPasswordField: 'tmpPasswordPlain'
+            plainPasswordField: 'tmpPasswordPlain',
+            tmpPasswordAddExpiry
           }),
           hashPassword({
             passwordField: 'tmpPassword',

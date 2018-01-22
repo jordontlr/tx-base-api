@@ -11,7 +11,7 @@ module.exports = function (app) {
     password: { type: String },
     passwordCreatedAt: { type: Date },
     tmpPassword: { type: String },
-    tmpPasswordTimestampExpiry: { type: Date },
+    tmpPasswordTimestampExpiry: { type: Number },
     tmpPasswordCreatedAt: { type: Date },
     isNewUser: { type: Boolean, default: true },
     isAdmin: { type: Boolean, default: false },

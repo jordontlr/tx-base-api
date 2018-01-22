@@ -22,7 +22,7 @@ module.exports = function () {
   // Get our initialized service so that we can register hooks and filters
   const service = app.service('forgot-password')
 
-  service.hooks(hooks({ outboundEmail, emailTemplates, emailBaseVariables }))
+  service.hooks(hooks({ app, outboundEmail, emailTemplates, emailBaseVariables }))
 
   if (service.filter) {
     service.filter(filters)
