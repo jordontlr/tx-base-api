@@ -21,11 +21,11 @@ class TmpPswdVerifier extends Verifier {
       )
     }
 
-    if (!entity.tempPasswordTimestampExpiry) {
+    if (!entity.tmpPasswordTimestampExpiry) {
       return Promise.reject(new Error('Temp password expiry missing!'))
     }
 
-    if (entity.tempPasswordTimestampExpiry < currentTimestamp) {
+    if (entity.tmpPasswordTimestampExpiry < currentTimestamp) {
       return Promise.reject(new Error('Temp password has expired!'))
     }
 

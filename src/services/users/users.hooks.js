@@ -86,7 +86,7 @@ module.exports = function (app) {
             emailBaseVariables
           })
         ).else(
-          // Check pswd and emailCode and set email=newEmail.
+          // Check password and emailCode and set email=newEmail.
           iff(
             hook => (hook.data && hook.data.emailCode),
             getUser(),

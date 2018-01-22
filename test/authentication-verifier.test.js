@@ -17,7 +17,7 @@ describe('MyVerifier', function () {
   const entity = {
     password: '123',
     tmpPassword: '456',
-    tempPasswordTimestampExpiry: futureTimestamp
+    tmpPasswordTimestampExpiry: futureTimestamp
   }
   const verifier = new MyVerifier(app, options)
 
@@ -50,7 +50,7 @@ describe('MyVerifier', function () {
       data: {
         password: '123',
         tmpPassword: '456',
-        tempPasswordTimestampExpiry: pastTimestamp
+        tmpPasswordTimestampExpiry: pastTimestamp
       }
     }
     return hashPassword()(hook).then(hook => {
@@ -99,7 +99,7 @@ describe('MyVerifier', function () {
       app,
       data: {
         tmpPassword: '456',
-        tempPasswordTimestampExpiry: futureTimestamp
+        tmpPasswordTimestampExpiry: futureTimestamp
       }
     }
     return hashPassword({passwordField: 'tmpPassword'})(hook).then(hook => {

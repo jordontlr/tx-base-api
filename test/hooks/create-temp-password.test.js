@@ -13,6 +13,6 @@ describe('\'createTempPassword\' hook', () => {
     assert.equal(result.data.tempPassword.length, 10, 'Should be the same length')
     assert.equal(result.data.tempPassword.toUpperCase(), result.data.tempPassword, 'Should be uppercase')
     assert.equal(result.data.tempPassword, result.data.tempPasswordPlain, 'Should be the same')
-    assert.ok(result.data.tempPasswordTimestampExpiry !== '', 'Should not be empty')
+    assert.ok(result.data.tmpPasswordTimestampExpiry !== '', 'Should not be empty')
   })
 })
