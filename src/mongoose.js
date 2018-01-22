@@ -3,8 +3,8 @@ const mongoose = require('mongoose')
 module.exports = function () {
   const app = this
 
-  if (false) {
-    mongoose.connect(app.get('mongodb'))
+  if (app.get('mongodb_staging') === 'MONGODB_URI') {
+    mongoose.connect(app.get('mongodb_staging'))
   } else {
     mongoose.connect(app.get('mongodb_local'))
   }
