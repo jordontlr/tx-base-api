@@ -39,8 +39,15 @@ module.exports = function (app) {
           hook => !hook.params.existingUser,
           // If the user has passed a password for account creation, delete it.
           discard('password'), setCreatedAt(), setUpdatedAt(),
-          createTemporaryPassword({hashedPasswordField: 'tmpPassword', plainPasswordField: 'tmpPasswordPlain', tmpPasswordAddExpiry}),
-          hashPassword({passwordField: 'tmpPassword', timeStampField: 'tmpPasswordCreatedAt'})
+          createTemporaryPassword({
+            hashedPasswordField: 'tmpPassword',
+            plainPasswordField: 'tmpPasswordPlain',
+            tmpPasswordAddExpiry
+          }),
+          hashPassword({
+            passwordField: 'tmpPassword',
+            timeStampField: 'tmpPasswordCreatedAt'
+          })
         )
       ],
       update: [
