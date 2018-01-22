@@ -94,5 +94,5 @@
     "domain": "txbasewebsite.com",
     "companyAddress": "Toronto, On, Canada"
   },
-  "tempPasswordExpiry": 172800000
+  "tmpPasswordExpiry": 172800000
 }
