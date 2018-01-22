@@ -7,8 +7,7 @@ const restrict = [
   restrictToOwner({
     idField: '_id',
     ownerField: '_id'
-  }),
-  setUpdatedAt()
+  })
 ]
 // const log = (msg, obj) => hook => ((obj ? console.log(msg, obj) : console.log(msg)), hook)
 
@@ -76,7 +75,8 @@ module.exports = function (app) {
           hook => {
             hook.data.tmpPassword = ''
             return hook
-          }
+          },
+          setUpdatedAt()
         ),
         // Case change email.
         iff(
@@ -91,7 +91,8 @@ module.exports = function (app) {
             From: outboundEmail,
             TemplateId: emailTemplates.changeEmail,
             emailBaseVariables
-          })
+          }),
+          setUpdatedAt()
         ).else(
           // Check password and emailCode and set email=newEmail.
           iff(
