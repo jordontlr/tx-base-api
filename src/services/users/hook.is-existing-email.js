@@ -1,5 +1,5 @@
 const defaults = {
-  emailField: 'email',
+  emailField: 'email'
 }
 
 // Check if the user already exists.
@@ -8,6 +8,10 @@ module.exports = function (options = {}) {
 
   return hook => {
     let userService = hook.service
+    if (!userService) {
+      return hook
+    }
+
     let query = {
       email: hook.data[options.emailField]
     }
