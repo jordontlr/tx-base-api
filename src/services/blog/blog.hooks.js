@@ -10,12 +10,14 @@ const restrict = [
   setUpdatedAt()
 ]
 
+const addLinkTitle = require('./hook.add-link-title')
+
 module.exports = {
   before: {
     all: [ when(hook => hook.method !== 'find', softDelete()) ],
     find: [],
-    get: [],
-    create: [ authenticate('jwt'), setCreatedAt(), setUpdatedAt() ],
+    get: [], // todo: get based on linkTitle if id doesn't exist
+    create: [ authenticate('jwt'), setCreatedAt(), setUpdatedAt(), addLinkTitle() ],
     update: [ ...restrict ],
     patch: [ ...restrict ],
     remove: [ ...restrict ]
