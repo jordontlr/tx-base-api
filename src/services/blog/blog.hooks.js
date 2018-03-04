@@ -16,7 +16,7 @@ module.exports = {
   before: {
     all: [ when(hook => hook.method !== 'find', softDelete()) ],
     find: [],
-    get: [], // todo: get based on linkTitle if id doesn't exist
+    get: [],
     create: [ authenticate('jwt'), setCreatedAt(), setUpdatedAt(), addLinkTitle() ],
     update: [ ...restrict ],
     patch: [ ...restrict ],
