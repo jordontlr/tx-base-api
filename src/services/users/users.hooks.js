@@ -12,6 +12,7 @@ const restrict = [
 // const log = (msg, obj) => hook => ((obj ? console.log(msg, obj) : console.log(msg)), hook)
 
 const isExistingUser = require('./hook.is-existing-user')
+const isExistingEmail = require('./hook.is-existing-email')
 const createTemporaryPassword = require('./hook.create-tmp-password')
 const sendWelcomeEmail = require('./hook.email.welcome')
 const sendDuplicateSignupEmail = require('./hook.email.duplicate-signup')
@@ -78,7 +79,24 @@ module.exports = function (app) {
           },
           setUpdatedAt()
         ),
-        // Case change email. // todo: if newEmail exists, send emailTemplates.changeEmailDuplicate instead and do not attempt change email address
+        // Case change email, but its already is used by another account:
+        // If newEmail exists, send emailTemplates.changeEmailDuplicate instead and do not attempt change email address.
+        isExistingEmail({emailField: 'newEmail'}),
+        iff(
+          hook => hook.params.existingEmail,
+          // Send email and return browser a success result.
+          sendEmailCode({
+            From: outboundEmail,
+            TemplateId: emailTemplates.changeEmailDuplicate,
+            emailBaseVariables
+          }),
+          hook => {
+            // Set result and cleanup data (to skip other hooks):
+            hook.result = hook.data
+            hook.data = null
+          }
+        ),
+        // Case change email.
         iff(
           // generate emailCode and save newEmail.
           hook => (hook.data && hook.data.newEmail && hook.data.password && !hook.data.emailCode),
