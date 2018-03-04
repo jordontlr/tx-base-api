@@ -8,12 +8,12 @@ module.exports = function (app) {
   const blog = new Schema({
     title: { type: String, required: true },
     shortPost: { type: String, required: true },
-    published: { type: Boolean, required: true },
-    datetime: { type: Number, required: true },
+    published: { type: Boolean, required: false, default: false },
+    datetime: { type: Number, default: Date.now },
     post: { type: String, required: true },
     delta: { type: String, required: true },
     author: { type: String, required: true },
-    linkTitle: { type: String, required: true },
+    linkTitle: { type: String, required: false },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   }, {
