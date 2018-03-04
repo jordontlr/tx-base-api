@@ -85,7 +85,8 @@
     "securityAlertFailedLogins": 4689523,
     "supportRequestNoAccount": 4689522,
     "supportRequestReceived": 4689521,
-    "supportRequestResponse": 4689462
+    "supportRequestResponse": 4689462,
+    "changeEmailDuplicate": 5165222
   },
   "postMarkVariables": {
     "companyName": "Tx Base Website",

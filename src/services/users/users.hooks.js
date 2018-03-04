@@ -78,7 +78,7 @@ module.exports = function (app) {
           },
           setUpdatedAt()
         ),
-        // Case change email.
+        // Case change email. // todo: if newEmail exists, send emailTemplates.changeEmailDuplicate instead and do not attempt change email address
         iff(
           // generate emailCode and save newEmail.
           hook => (hook.data && hook.data.newEmail && hook.data.password && !hook.data.emailCode),
