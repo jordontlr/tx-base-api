@@ -6,8 +6,7 @@ const restrict = [
   authenticate('jwt'),
   restrictToRoles({
     roles: ['admin', 'super-admin', 'manager', 'editor']
-  }),
-  setUpdatedAt()
+  })
 ]
 
 module.exports = {
@@ -16,8 +15,8 @@ module.exports = {
     find: [],
     get: [],
     create: [ authenticate('jwt'), setCreatedAt(), setUpdatedAt() ],
-    update: [ ...restrict ],
-    patch: [ ...restrict ],
+    update: [ ...restrict, setUpdatedAt() ],
+    patch: [ ...restrict, setUpdatedAt() ],
     remove: [ ...restrict ]
   },
 

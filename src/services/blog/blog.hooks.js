@@ -6,8 +6,7 @@ const restrict = [
   authenticate('jwt'),
   restrictToRoles({
     roles: ['admin', 'super-admin', 'manager', 'editor']
-  }),
-  setUpdatedAt()
+  })
 ]
 
 const addLinkTitle = require('./hook.add-link-title')
@@ -18,8 +17,8 @@ module.exports = {
     find: [],
     get: [],
     create: [ authenticate('jwt'), setCreatedAt(), setUpdatedAt(), addLinkTitle() ],
-    update: [ ...restrict ],
-    patch: [ ...restrict ],
+    update: [ ...restrict, setUpdatedAt() ],
+    patch: [ ...restrict, setUpdatedAt() ],
     remove: [ ...restrict ]
   },
 
