@@ -1,4 +1,4 @@
-const Verifier = require('feathers-authentication-local').Verifier
+const Verifier = require('@feathersjs/authentication-local').Verifier
 const get = require('lodash').get
 const Debug = require('debug')
 const debug = Debug('feathers-authentication-local-tmp:_comparePassword')

@@ -1,6 +1,6 @@
 const assert = require('assert')
-const feathers = require('feathers')
-const { hashPassword } = require('feathers-authentication-local').hooks
+const feathers = require('@feathersjs/feathers')
+const { hashPassword } = require('@feathersjs/authentication-local').hooks
 // const hashPassword = require('feathers-authentication-local/lib/utils/hash')
 // const app = require('../src/app')
 const MyVerifier = require('../src/authentication-verifier')
