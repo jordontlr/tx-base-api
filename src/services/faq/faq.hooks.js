@@ -11,7 +11,7 @@ const restrict = [
 
 module.exports = {
   before: {
-    all: [ when(hook => hook.method !== 'find', softDelete()) ],
+    all: softDelete(),
     find: [],
     get: [],
     create: [ authenticate('jwt'), setCreatedAt(), setUpdatedAt() ],
@@ -22,7 +22,7 @@ module.exports = {
 
   after: {
     all: [
-      discard('__v')
+      discard('__v', 'deleted')
     ],
     find: [],
     get: [],
