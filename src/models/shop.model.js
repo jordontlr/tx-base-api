@@ -6,7 +6,11 @@ module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient')
   const { Schema } = mongooseClient
   const shop = new Schema({
-    text: { type: String, required: true }
+    product: { type: String, required: true },
+    category: { type: String, required: false },
+    deleted: { type: Boolean },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
   }, {
     timestamps: true
   })
