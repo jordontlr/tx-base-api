@@ -5,6 +5,7 @@ const postmark = require('./postmark-messages')
 const forgotPassword = require('./forgot-password/forgot-password.service.js')
 const faq = require('./faq/faq.service.js')
 const blog = require('./blog/blog.service.js')
+const shop = require('./shop/shop.service.js')
 
 module.exports = function () {
   const app = this
@@ -13,4 +14,5 @@ module.exports = function () {
   app.configure(forgotPassword)
   app.configure(faq)
   app.configure(blog)
+  app.configure(shop)
 }

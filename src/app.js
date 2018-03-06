@@ -6,7 +6,7 @@ const helmet = require('helmet')
 const bodyParser = require('body-parser')
 
 const feathers = require('@feathersjs/feathers')
-const express = require('@feathersjs/express');
+const express = require('@feathersjs/express')
 const configuration = require('@feathersjs/configuration')
 const rest = require('@feathersjs/express/rest')
 const socketio = require('@feathersjs/socketio')
