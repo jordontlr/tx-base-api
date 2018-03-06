@@ -1,4 +1,4 @@
-const errors = require('feathers-errors')
+const errors = require('@feathersjs/errors')
 
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return function checkEmailCode (hook) {

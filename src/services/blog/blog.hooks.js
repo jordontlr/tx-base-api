@@ -1,4 +1,4 @@
-const { authenticate } = require('feathers-authentication').hooks
+const { authenticate } = require('@feathersjs/authentication').hooks
 const { restrictToRoles } = require('feathers-authentication-hooks')
 const { softDelete, setCreatedAt, setUpdatedAt, discard } = require('feathers-hooks-common')
 
@@ -24,7 +24,7 @@ module.exports = {
 
   after: {
     all: [
-      discard('__v')
+      discard('__v', 'deleted')
     ],
     find: [],
     get: [],

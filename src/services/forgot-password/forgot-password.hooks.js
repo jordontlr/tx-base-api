@@ -1,5 +1,5 @@
 const { iff } = require('feathers-hooks-common')
-const { hashPassword } = require('feathers-authentication-local').hooks
+const { hashPassword } = require('@feathersjs/authentication-local').hooks
 
 const findUser = require('./hook.find-user')
 const createTmpPassword = require('../users/hook.create-tmp-password')

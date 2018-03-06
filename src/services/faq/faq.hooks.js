@@ -1,4 +1,4 @@
-const { authenticate } = require('feathers-authentication').hooks
+const { authenticate } = require('@feathersjs/authentication').hooks
 const { restrictToRoles } = require('feathers-authentication-hooks')
 const { softDelete, setCreatedAt, setUpdatedAt, discard } = require('feathers-hooks-common')
 
@@ -11,7 +11,7 @@ const restrict = [
 
 module.exports = {
   before: {
-    all: softDelete(),
+    all: [ softDelete() ],
     find: [],
     get: [],
     create: [ authenticate('jwt'), setCreatedAt(), setUpdatedAt() ],

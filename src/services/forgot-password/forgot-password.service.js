@@ -1,7 +1,6 @@
 // Initializes the `forgot-password` service on path `/forgot-password`
 const createService = require('./forgot-password.class.js')
 const hooks = require('./forgot-password.hooks')
-const filters = require('./forgot-password.filters')
 
 module.exports = function () {
   const app = this
@@ -23,8 +22,4 @@ module.exports = function () {
   const service = app.service('forgot-password')
 
   service.hooks(hooks({ app, outboundEmail, emailTemplates, emailBaseVariables }))
-
-  if (service.filter) {
-    service.filter(filters)
-  }
 }

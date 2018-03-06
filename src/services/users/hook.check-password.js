@@ -1,4 +1,4 @@
-const errors = require('feathers-errors')
+const errors = require('@feathersjs/errors')
 const comparePassword = require('../../utils/compare-password')
 const Debug = require('debug')
 const debug = Debug('hook.check-password')
