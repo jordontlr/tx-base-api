@@ -1,6 +1,6 @@
 const { authenticate } = require('feathers-authentication').hooks
 const { restrictToRoles } = require('feathers-authentication-hooks')
-const { softDelete, when, setCreatedAt, setUpdatedAt, discard } = require('feathers-hooks-common')
+const { softDelete, setCreatedAt, setUpdatedAt, discard } = require('feathers-hooks-common')
 
 const restrict = [
   authenticate('jwt'),
@@ -13,7 +13,7 @@ const addLinkTitle = require('./hook.add-link-title')
 
 module.exports = {
   before: {
-    all: [ when(hook => hook.method !== 'find', softDelete()) ],
+    all: [ softDelete() ],
     find: [],
     get: [],
     create: [ authenticate('jwt'), setCreatedAt(), setUpdatedAt(), addLinkTitle() ],

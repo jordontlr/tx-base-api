@@ -1,6 +1,6 @@
 const { authenticate } = require('feathers-authentication').hooks
 const { restrictToRoles } = require('feathers-authentication-hooks')
-const { softDelete, when, setCreatedAt, setUpdatedAt, discard } = require('feathers-hooks-common')
+const { softDelete, setCreatedAt, setUpdatedAt, discard } = require('feathers-hooks-common')
 
 const restrict = [
   authenticate('jwt'),
