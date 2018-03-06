@@ -74,7 +74,11 @@ module.exports = function (app) {
           hashPassword(),
           // If password gets changed remove the tmpPassword:
           hook => {
-            hook.data.tmpPassword = ''
+            hook.data.isNewUser = false
+            hook.data.tmpPassword = null
+            hook.data.tmpPasswordTimestampExpiry = null
+            hook.data.role = 'user'
+
             return hook
           },
           setUpdatedAt()
