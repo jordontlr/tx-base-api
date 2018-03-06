@@ -9,6 +9,7 @@ module.exports = function (app) {
     question: { type: String, required: true },
     answer: { type: String, required: true },
     category: { type: String, required: false },
+    deleted: { type: Boolean },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   }, {
