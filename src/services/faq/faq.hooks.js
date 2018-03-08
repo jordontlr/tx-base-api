@@ -17,13 +17,11 @@ module.exports = {
     create: [ authenticate('jwt'), setCreatedAt(), setUpdatedAt() ],
     update: [ ...restrict, setUpdatedAt() ],
     patch: [ ...restrict, setUpdatedAt() ],
-    remove: [ ...restrict ]
+    remove: [ ...restrict, setUpdatedAt() ]
   },
 
   after: {
-    all: [
-      discard('__v', 'deleted')
-    ],
+    all: [ discard('__v', 'deleted') ],
     find: [],
     get: [],
     create: [],

@@ -13,6 +13,7 @@ module.exports = function (app) {
     dayOfBirth: {type: Number, required: false },
     monthOfBirth: {type: Number, required: false },
     yearOfBirth: {type: Number, required: false },
+    userId: { type: String, required: true },
     deleted: { type: Boolean },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
