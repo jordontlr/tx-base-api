@@ -1,8 +1,7 @@
 const postmark = require('feathers-postmark')
 const { disallow } = require('feathers-hooks-common')
 
-module.exports = function () {
-  const app = this
+module.exports = function (app) {
   const options = app.get('postmark')
 
   app.use('postmark-messages', postmark(options))

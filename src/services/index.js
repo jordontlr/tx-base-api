@@ -6,13 +6,14 @@ const forgotPassword = require('./forgot-password/forgot-password.service.js')
 const faq = require('./faq/faq.service.js')
 const blog = require('./blog/blog.service.js')
 const shop = require('./shop/shop.service.js')
+const uploads = require('./uploads/uploads.service.js')
 
-module.exports = function () {
-  const app = this
+module.exports = function (app) {
   app.configure(users)
   app.configure(postmark)
   app.configure(forgotPassword)
   app.configure(faq)
   app.configure(blog)
   app.configure(shop)
+  app.configure(uploads)
 }

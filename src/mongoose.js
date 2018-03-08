@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
-module.exports = function () {
-  const app = this
+module.exports = function (app) {
 
   if (app.get('mongodb') !== 'MONGODB_URI') {
     mongoose.connect(app.get('mongodb'))

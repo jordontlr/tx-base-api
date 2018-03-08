@@ -7,8 +7,7 @@ const FacebookStrategy = require('passport-facebook')
 const GithubStrategy = require('passport-github')
 const MyVerifier = require('./authentication-verifier')
 
-module.exports = function () {
-  const app = this
+module.exports = function (app) {
   const config = app.get('authentication')
 
   // Set up authentication with the secret
