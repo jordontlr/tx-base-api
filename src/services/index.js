@@ -8,6 +8,8 @@ const blog = require('./blog/blog.service.js')
 const shop = require('./shop/shop.service.js')
 const uploads = require('./uploads/uploads.service.js')
 
+const profile = require('./profile/profile.service.js')
+
 module.exports = function (app) {
   app.configure(users)
   app.configure(postmark)
@@ -16,4 +18,5 @@ module.exports = function (app) {
   app.configure(blog)
   app.configure(shop)
   app.configure(uploads)
+  app.configure(profile)
 }

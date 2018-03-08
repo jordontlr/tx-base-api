@@ -15,7 +15,6 @@ const fs = require('fs-blob-store')
 const blobStorage = fs('./uploads')
 
 module.exports = function (app) {
-
   // Initialize our service with any options it requires
   app.use('/uploads',
 
@@ -26,15 +25,15 @@ module.exports = function (app) {
 
     // another middleware, this time to
     // transfer the received file to feathers
-    function(req,res,next){
+    function (req, res, next) {
       req.feathers.file = req.file
       next()
     },
-    blobService({ Model: blobStorage})
+    blobService({ Model: blobStorage })
   )
 
   // Get our initialized service so that we can register hooks and filters
   const service = app.service('uploads')
 
   service.hooks(hooks)
-};
+}
