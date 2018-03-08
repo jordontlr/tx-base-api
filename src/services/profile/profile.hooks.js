@@ -5,16 +5,16 @@ const { softDelete, setCreatedAt, setUpdatedAt, discard } = require('feathers-ho
 module.exports = {
   before: {
     all: [ authenticate('jwt'), softDelete() ],
-    find: [ queryWithCurrentUser({idField: '_id', as: 'userId'}) ],
-    get: [ restrictToOwner({idField: '_id', ownerField: 'userId'}) ],
-    create: [ associateCurrentUser({idField: '_id', as: 'userId'}), setCreatedAt(), setUpdatedAt() ],
-    update: [ restrictToOwner({idField: '_id', ownerField: 'userId'}), setUpdatedAt() ],
-    patch: [ restrictToOwner({idField: '_id', ownerField: 'userId'}), setUpdatedAt() ],
-    remove: [ restrictToOwner({idField: '_id', ownerField: 'userId'}), setUpdatedAt() ]
+    find: [ queryWithCurrentUser() ],
+    get: [ restrictToOwner() ],
+    create: [ associateCurrentUser(), setCreatedAt(), setUpdatedAt() ],
+    update: [ restrictToOwner(), setUpdatedAt() ],
+    patch: [ restrictToOwner(), setUpdatedAt() ],
+    remove: [ restrictToOwner(), setUpdatedAt() ]
   },
 
   after: {
-    all: [ discard('__v', 'deleted', 'userId') ],
+    all: [ discard('__v', 'deleted') ],
     find: [],
     get: [],
     create: [],
