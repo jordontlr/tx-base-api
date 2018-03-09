@@ -10,6 +10,7 @@ module.exports = function (app) {
     lastName: { type: String, required: false },
     image: { type: String, required: false },
     gender: { type: String, required: false },
+    countryCode: { type: String, required: false },
     dayOfBirth: { type: Number, required: false },
     monthOfBirth: { type: Number, required: false },
     yearOfBirth: { type: Number, required: false },
