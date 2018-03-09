@@ -3,10 +3,11 @@ const dauria = require('dauria')
 
 module.exports = {
   before: {
-    all: [ authenticate('jwt') ],
+    all: [],
     find: [],
     get: [],
     create: [
+      authenticate('jwt'),
       function (context) {
         if (!context.data.uri && context.params.file) {
           const file = context.params.file
