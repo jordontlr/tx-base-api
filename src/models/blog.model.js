@@ -14,6 +14,7 @@ module.exports = function (app) {
     delta: { type: String, required: true },
     author: { type: String, required: true },
     linkTitle: { type: String, required: false },
+    imageId: { type: String, required: false },
     deleted: { type: Boolean },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
