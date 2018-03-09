@@ -114,3 +114,5 @@ data/
 
 .nyc_output
 config/local-development.json
+
+uploads/*
