@@ -29,7 +29,7 @@ module.exports = function (app) {
       req.feathers.file = req.file
       next()
     },
-    blobService({ Model: blobStorage })
+    blobService({ Model: blobStorage, id: '_id' })
   )
 
   // Get our initialized service so that we can register hooks and filters
