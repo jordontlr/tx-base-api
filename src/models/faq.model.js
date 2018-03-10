@@ -8,6 +8,7 @@ module.exports = function (app) {
   const faq = new Schema({
     question: { type: String, required: true },
     answer: { type: String, required: true },
+    delta: { type: String, required: true },
     category: { type: String, required: false },
     deleted: { type: Boolean },
     createdAt: { type: Date, default: Date.now },
