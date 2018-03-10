@@ -13,6 +13,8 @@ module.exports = function (app) {
     post: { type: String, required: true },
     delta: { type: String, required: true },
     author: { type: String, required: true },
+    category: { type: String, required: false },
+    tags: { type: Array, required: false },
     linkTitle: { type: String, required: false },
     imageId: { type: String, required: false },
     deleted: { type: Boolean },
