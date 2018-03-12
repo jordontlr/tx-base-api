@@ -4,6 +4,7 @@ require('./hooks/check-email-code.test')
 require('./hooks/create-email-code.test')
 require('./hooks/create-tmp-password.test')
 require('./hooks/users.hook.patch.test')
+require('./hooks/blog.add-link-title.test')
 
 require('./services/blog.test')
 // require('./services/faq.test')
