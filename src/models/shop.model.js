@@ -15,6 +15,7 @@ module.exports = function (app) {
     content: { type: String, required: false },
     sku: { type: String, required: false },
     brand: { type: String, required: false },
+    tags: { type: Array, required: false },
     imageId: { type: Array, required: false },
     listed: { type: Boolean, required: true },
     deleted: { type: Boolean },

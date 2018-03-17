@@ -14,7 +14,7 @@ module.exports = {
     all: [ softDelete() ],
     find: [],
     get: [],
-    create: [ authenticate('jwt'), setCreatedAt(), setUpdatedAt() ],
+    create: [ ...restrict, setCreatedAt(), setUpdatedAt() ],
     update: [ ...restrict, setUpdatedAt() ],
     patch: [ ...restrict, setUpdatedAt() ],
     remove: [ ...restrict, setUpdatedAt() ]
