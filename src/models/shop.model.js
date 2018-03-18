@@ -16,7 +16,7 @@ module.exports = function (app) {
     sku: { type: String, required: false },
     brand: { type: String, required: false },
     tags: { type: Array, required: false },
-    imageId: { type: Array, required: false },
+    imageData: { type: Array, required: false },
     listed: { type: Boolean, required: true },
     deleted: { type: Boolean },
     createdAt: { type: Date, default: Date.now },
