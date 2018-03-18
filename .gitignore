@@ -116,3 +116,4 @@ data/
 config/local-development.json
 
 uploads/*
+yarn.lock
