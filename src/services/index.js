@@ -10,6 +10,8 @@ const uploads = require('./uploads/uploads.service.js')
 
 const profile = require('./profile/profile.service.js')
 
+const image = require('./image/image.service.js')
+
 module.exports = function (app) {
   app.configure(users)
   app.configure(postmark)
@@ -19,4 +21,5 @@ module.exports = function (app) {
   app.configure(shop)
   app.configure(uploads)
   app.configure(profile)
+  app.configure(image)
 }
