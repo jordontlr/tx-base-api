@@ -8,7 +8,7 @@ module.exports = function (app) {
   const profile = new Schema({
     firstName: { type: String, required: false },
     lastName: { type: String, required: false },
-    imageId: { type: String, required: false },
+    imageData: { type: String, required: false },
     gender: { type: String, required: false },
     countryCode: { type: String, required: false },
     dayOfBirth: { type: Number, required: false },
