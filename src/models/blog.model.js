@@ -16,7 +16,7 @@ module.exports = function (app) {
     category: { type: String, required: false },
     tags: { type: Array, required: false },
     linkTitle: { type: String, required: false },
-    imageId: { type: String, required: false },
+    imageData: { type: String, required: false },
     deleted: { type: Boolean },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
