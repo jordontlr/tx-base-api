@@ -1,9 +1,10 @@
 // Application hooks that run for every service
 const logger = require('./hooks/logger')
+const addUserAgent = require('./hooks/user-agent')
 
 module.exports = {
   before: {
-    all: [],
+    all: [ addUserAgent() ],
     find: [],
     get: [],
     create: [],
