@@ -15,11 +15,14 @@ module.exports = function (app) {
     tmpPasswordCreatedAt: { type: Date },
     isNewUser: { type: Boolean, default: true },
     isAdmin: { type: Boolean, default: false },
+    userLocked: { type: Boolean, default: false },
+    roles: { type: String, default: false },
 
     // For changing email:
     emailCode: { type: String },
     newEmail: { type: String },
 
+    deleted: { type: Boolean },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   }, {

@@ -10,7 +10,10 @@ module.exports = function (app) {
   const options = {
     name: 'shop',
     Model,
-    paginate
+    paginate: {
+      default: 500,
+      max: 500
+    }
   }
 
   // Initialize our service with any options it requires
