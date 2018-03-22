@@ -9,6 +9,8 @@ module.exports = function (app) {
     fingerprint: { type: String, required: false },
     userId: { type: String, required: false },
     cartItems: { type: Array, required: false },
+	  initiatedPayment: { type: Boolean, required: false },
+	  paymentType: { type: String, required: false },
     deleted: { type: Boolean },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }

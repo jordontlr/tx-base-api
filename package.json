@@ -7,7 +7,11 @@
   "keywords": [
     "feathers"
   ],
-  "author": {},
+  "author": {
+    "name": "Marc Godard",
+    "email": "me@marcgodard.com",
+    "url": "http://marcgodard.com"
+  },
   "contributors": [],
   "bugs": {},
   "directories": {
@@ -61,7 +65,9 @@
     "passport-facebook": "^2.1.1",
     "passport-github": "^1.1.0",
     "passport-google-oauth20": "^1.0.0",
+    "paypal-rest-sdk": "^1.8.1",
     "serve-favicon": "^2.4.5",
+    "stripe": "^5.5.0",
     "ua-parser": "^0.3.5",
     "winston": "^2.3.1"
   },
