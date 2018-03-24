@@ -1,14 +1,21 @@
 const { authenticate } = require('@feathersjs/authentication').hooks
-const { restrictToOwner } = require('feathers-authentication-hooks')
+const { restrictToOwner, restrictToRoles } = require('feathers-authentication-hooks')
 const { hashPassword, protect } = require('@feathersjs/authentication-local').hooks
 const { softDelete, iff, discard, isProvider, setUpdatedAt, setCreatedAt } = require('feathers-hooks-common') // disallow, isProvider, lowerCase
-const restrict = [
-  authenticate('jwt'),
+
+const restrictOwner = [
   restrictToOwner({
     idField: '_id',
     ownerField: '_id'
   })
 ]
+
+const restrictRole = [
+  restrictToRoles({
+    roles: ['admin', 'super-admin', 'manager', 'editor']
+  })
+]
+
 // const log = (msg, obj) => hook => ((obj ? console.log(msg, obj) : console.log(msg)), hook)
 
 const isExistingUser = require('./hook.is-existing-user')
@@ -30,9 +37,9 @@ module.exports = function (app) {
 
   return {
     before: {
-      all: [ softDelete() ],
-      find: [authenticate('jwt')],
-      get: [...restrict],
+      all: [ softDelete(), authenticate('jwt') ],
+      find: [ ...restrictRole ],
+      get: [ ...restrictOwner ],
       create: [
         isExistingUser(),
         iff(
@@ -60,7 +67,7 @@ module.exports = function (app) {
         }
       ],
       patch: [
-        ...restrict,
+        ...restrictOwner,
         // Do not allow changing user's password and email outside of the special cases down below.
         iff(
           hook => (hook.data && hook.data.password && !(hook.data.oldPassword || hook.data.newEmail || hook.data.emailCode)),
@@ -130,7 +137,7 @@ module.exports = function (app) {
           )
         )
       ],
-      remove: [...restrict]
+      remove: [ ...restrictRole ]
     },
 
     after: {
