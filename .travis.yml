@@ -4,3 +4,5 @@ node_js: 7.3
 cache: yarn
 env:
   - NODE_ENV=ci
+notifications:
+  slack: txuniverse:O1XW4GuJH91iHr71md4n7rsl
