@@ -184,3 +184,5 @@ module.exports = function (app) {
     }
   }
 }
+
+module.exports.restrict = restrictOwner
