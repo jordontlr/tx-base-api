@@ -184,5 +184,3 @@ module.exports = function (app) {
     }
   }
 }
-
-module.exports.restrict = restrict

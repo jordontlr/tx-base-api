@@ -1,23 +1,52 @@
 const { authenticate } = require('@feathersjs/authentication').hooks
-const { restrictToRoles } = require('feathers-authentication-hooks')
-const { softDelete, setCreatedAt, setUpdatedAt, discard } = require('feathers-hooks-common')
+const { restrictToOwner } = require('feathers-authentication-hooks')
+const { softDelete, iff, setCreatedAt, setUpdatedAt, discard } = require('feathers-hooks-common')
 
-const restrict = [
-  authenticate('jwt'),
-  restrictToRoles({
-    roles: ['admin', 'super-admin', 'manager', 'editor']
-  })
-]
+// const collectTotals = require('./hook.collectTotals')
+// const readyPayPalAuth = require('./hook.ready-paypal-auth')
+// const completePayPalPayment = require('./hook.complete-paypal-payment')
 
 module.exports = {
   before: {
     all: [ softDelete() ],
-    find: [],
-    get: [],
-    create: [ setCreatedAt() ],
-    update: [],
-    patch: [],
-    remove: [ ...restrict, setUpdatedAt() ]
+    find: [
+      authenticate('jwt'),
+      restrictToOwner()
+    ],
+    get: [
+      iff(
+        context => context.params.authenticated,
+        authenticate('jwt'),
+        restrictToOwner()
+      ).else(
+        context => {
+          Object.assign(context.params.query, { public: true })
+          return context
+        }
+      )
+    ],
+    create: [
+      iff(
+        context => context.params.authenticated,
+        context => context.data.public = false
+      ),
+      setCreatedAt()
+    ],
+    update: [
+      iff(
+        hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.initiatedPayment && !hook.data.paymentProcessId && !hook.data.paymentClientId),
+        // collectTotals(),
+        // readyPayPalAuth(),
+        setUpdatedAt()
+      ),
+      iff(
+        hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.initiatedPayment && hook.data.paymentProcessId && hook.data.paymentClientId),
+        // completePayPalPayment(),
+        setUpdatedAt()
+      ),
+    ],
+    patch: [ setUpdatedAt() ],
+    remove: [ setUpdatedAt() ]
   },
 
   after: {

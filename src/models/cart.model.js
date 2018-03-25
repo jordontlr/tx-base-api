@@ -9,8 +9,14 @@ module.exports = function (app) {
     fingerprint: { type: String, required: false },
     userId: { type: String, required: false },
     cartItems: { type: Array, required: false },
+
     initiatedPayment: { type: Boolean, required: false },
     paymentType: { type: String, required: false },
+    paymentClientId: { type: String, required: false },
+    paymentProcessId: { type: String, required: false },
+    payPal: { type: Object, required: false },
+
+    public: { type: Boolean, default: true },
     deleted: { type: Boolean },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
