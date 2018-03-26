@@ -12,8 +12,6 @@ module.exports = function (app) {
 
     initiatedPayment: { type: Boolean, required: false },
     paymentType: { type: String, required: false },
-    paymentClientId: { type: String, required: false },
-    paymentProcessId: { type: String, required: false },
     payPal: { type: Object, required: false },
 
     public: { type: Boolean, default: true },

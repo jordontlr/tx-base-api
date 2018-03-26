@@ -1,14 +1,14 @@
 const { authenticate } = require('@feathersjs/authentication').hooks
 const { restrictToOwner } = require('feathers-authentication-hooks')
-const { softDelete, iff, setCreatedAt, setUpdatedAt, discard } = require('feathers-hooks-common')
+const { iff, setCreatedAt, setUpdatedAt, discard } = require('feathers-hooks-common')
 
 const collectTotals = require('./hook.collect-totals')
-// const readyPayPalAuth = require('./hook.ready-paypal-auth')
+const readyPayPalAuth = require('./hook.ready-paypal-auth')
 // const completePayPalPayment = require('./hook.complete-paypal-payment')
 
 module.exports = {
   before: {
-    all: [ softDelete() ],
+    all: [],
     find: [
       authenticate('jwt'),
       restrictToOwner()
@@ -39,7 +39,7 @@ module.exports = {
       iff(
         hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.initiatedPayment && !hook.data.paymentProcessId && !hook.data.paymentClientId),
         collectTotals(),
-        // readyPayPalAuth(),
+        readyPayPalAuth(),
         setUpdatedAt()
       ),
       iff(
@@ -49,12 +49,12 @@ module.exports = {
         setUpdatedAt()
       )
     ],
-    patch: [ setUpdatedAt() ],
-    remove: [ setUpdatedAt() ]
+    patch: [ setCreatedAt() ],
+    remove: []
   },
 
   after: {
-    all: [ discard('__v', 'deleted') ],
+    all: [ discard('__v') ],
     find: [],
     get: [],
     create: [],

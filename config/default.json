@@ -71,7 +71,6 @@
     }
   },
   "mongodb": "MONGODB_URI",
-  "mongodb_local": "mongodb://heroku_jjr148w1:fedmn1b3rp3vnv1b1q6clktcjh@ds111478.mlab.com:11478/heroku_jjr148w1",
   "postmark": {
     "key": "POST_MARK_API_KEY"
   },
@@ -95,5 +94,13 @@
     "domain": "txbasewebsite.com",
     "companyAddress": "Toronto, On, Canada"
   },
-  "tmpPasswordExpiry": 172800000
+  "tmpPasswordExpiry": 172800000,
+  "paypal": {
+    "account": "PAYPAL_ACCOUNT",
+    "account_type": "PAYPAL_ACCOUNT_TYPE",
+    "access_token": "PAYPAL_ACCESS_TOKEN",
+    "client_id": "PAYPAL_CLIENT_ID",
+    "client_secret": "PAYPAL_CLIENT_SECRET"
+  },
+  "currency": "USD"
 }
