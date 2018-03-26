@@ -3,8 +3,8 @@ const { restrictToOwner } = require('feathers-authentication-hooks')
 const { iff, setCreatedAt, setUpdatedAt, discard } = require('feathers-hooks-common')
 
 const collectTotals = require('./hook.collect-totals')
-const readyPayPalAuth = require('./hook.ready-paypal-auth')
-// const completePayPalPayment = require('./hook.complete-paypal-payment')
+const authorizedPayPalPayment = require('./hook.authorized-paypal-payment')
+// const executePayPalPayment = require('./hook.execute-paypal-payment')
 
 module.exports = {
   before: {
@@ -37,15 +37,15 @@ module.exports = {
     ],
     update: [
       iff(
-        hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.initiatedPayment && !hook.data.paymentProcessId && !hook.data.paymentClientId),
+        hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.paymentInitiated && !hook.data.paymentAuthorized && !hook.data.paymentComplete),
         collectTotals(),
-        readyPayPalAuth(),
+        authorizedPayPalPayment(),
         setUpdatedAt()
       ),
       iff(
-        hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.initiatedPayment && hook.data.paymentProcessId && hook.data.paymentClientId),
+        hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.paymentInitiated && hook.data.paymentAuthorized && !hook.data.paymentComplete),
         collectTotals(),
-        // completePayPalPayment(),
+        // executePayPalPayment(),
         setUpdatedAt()
       )
     ],

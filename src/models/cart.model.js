@@ -10,7 +10,10 @@ module.exports = function (app) {
     userId: { type: String, required: false },
     cartItems: { type: Array, required: false },
 
-    initiatedPayment: { type: Boolean, required: false },
+    paymentInitiated: { type: Boolean, default: false },
+    paymentAuthorized: { type: Boolean, default: false },
+    paymentComplete: { type: Boolean, default: false },
+
     paymentType: { type: String, required: false },
     payPal: { type: Object, required: false },
 

@@ -18,33 +18,22 @@ module.exports = function (options = {}) {
 
     let env = new paypal.core.SandboxEnvironment(options.client_id, options.client_secret)
     let client = new paypal.core.PayPalHttpClient(env)
-
-    let payment = {
-      intent: 'sale',
-      payer: {
-        payment_method: 'paypal'
-      },
-      redirect_urls: {
-        return_url: 'http://return.url',
-        cancel_url: 'http://cancel.url'
-      },
+    let executePaymentJson = {
+      payer_id: hook.data.paypal.payerId,
       transactions: [{
-        item_list: {
-          items: hook.params.payPalList
-        },
         amount: {
-          currency: options.currency,
+          currency: currency,
           total: hook.params.total
-        },
-        description: 'Payment for items.'
+        }
       }]
     }
 
-    let request = new payments.PaymentCreateRequest()
-    request.requestBody(payment)
+    let request = new payments.PaymentExecuteRequest()
+    request.requestBody(executePaymentJson)
 
     return client.execute(request).then((response) => {
-      hook.data.payPal = { paymentID: response.result.id }
+      console.log(response)
+      hook.data.paymentComplete = true
       return hook
     })
   }
