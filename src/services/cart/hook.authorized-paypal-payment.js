@@ -18,6 +18,7 @@ module.exports = function (options = {}) {
 
     let env = new paypal.core.SandboxEnvironment(options.client_id, options.client_secret)
     let client = new paypal.core.PayPalHttpClient(env)
+
     let payment = {
       intent: 'sale',
       payer: {
@@ -43,9 +44,9 @@ module.exports = function (options = {}) {
     request.requestBody(payment)
 
     return client.execute(request).then((response) => {
-      console.log(response)
+      console.log(`[hook.authorized-paypal-payment] ${response.result.id}`)
       hook.data.paymentAuthorized = true
-      hook.data.payPal = { paymentId: response.result.id }
+      hook.data.payPal = { paymentID: response.result.id, saleResponse: response.result }
       return hook
     })
   }

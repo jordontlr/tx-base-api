@@ -4,7 +4,7 @@ const { iff, setCreatedAt, setUpdatedAt, discard } = require('feathers-hooks-com
 
 const collectTotals = require('./hook.collect-totals')
 const authorizedPayPalPayment = require('./hook.authorized-paypal-payment')
-// const executePayPalPayment = require('./hook.execute-paypal-payment')
+const executePayPalPayment = require('./hook.execute-paypal-payment')
 
 module.exports = {
   before: {
@@ -37,15 +37,19 @@ module.exports = {
     ],
     update: [
       iff(
-        hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.paymentInitiated && !hook.data.paymentAuthorized && !hook.data.paymentComplete),
+        hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.paymentInitiated && hook.data.paymentAuthorized && !hook.data.paymentComplete),
         collectTotals(),
-        authorizedPayPalPayment(),
+        executePayPalPayment(),
+        context => {
+          context.data.paymentComplete = true
+          return context
+        },
         setUpdatedAt()
       ),
       iff(
-        hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.paymentInitiated && hook.data.paymentAuthorized && !hook.data.paymentComplete),
+        hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.paymentInitiated && !hook.data.paymentAuthorized && !hook.data.paymentComplete),
         collectTotals(),
-        // executePayPalPayment(),
+        authorizedPayPalPayment(),
         setUpdatedAt()
       )
     ],

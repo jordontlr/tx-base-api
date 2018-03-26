@@ -18,8 +18,9 @@ module.exports = function (options = {}) {
 
     let env = new paypal.core.SandboxEnvironment(options.client_id, options.client_secret)
     let client = new paypal.core.PayPalHttpClient(env)
+
     let executePaymentJson = {
-      payer_id: hook.data.paypal.payerId,
+      payer_id: hook.data.payPal.payerID,
       transactions: [{
         amount: {
           currency: currency,
@@ -28,11 +29,12 @@ module.exports = function (options = {}) {
       }]
     }
 
-    let request = new payments.PaymentExecuteRequest()
+    let request = new payments.PaymentExecuteRequest(hook.data.payPal.paymentID)
     request.requestBody(executePaymentJson)
 
     return client.execute(request).then((response) => {
-      console.log(response)
+      console.log(`[hook.execute-paypal-payment] ${response.result.id}`)
+      hook.data.payPal = Object.assign(hook.data.payPal, {executeResponse: response.result})
       hook.data.paymentComplete = true
       return hook
     })
