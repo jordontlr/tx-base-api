@@ -74,7 +74,7 @@
   "postmark": {
     "key": "POST_MARK_API_KEY"
   },
-  "outboundEmail": "Tx Base Website <info@txbasewebsite.com>",
+  "outboundEmail": "Jordon Taylor <info@txbasewebsite.com>",
   "postmarkTemplateIds": {
     "welcome": 4689461,
     "changeEmail": 4689465,
