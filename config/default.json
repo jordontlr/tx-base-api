@@ -18,7 +18,7 @@
       "header": {
         "type": "access"
       },
-      "audience": "https://txbasewebsite.com",
+      "audience": "https://accesswebwatch.com",
       "subject": "anonymous",
       "issuer": "feathers",
       "algorithm": "HS256",
