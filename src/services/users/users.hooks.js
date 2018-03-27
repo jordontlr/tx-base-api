@@ -4,6 +4,7 @@ const { hashPassword, protect } = require('@feathersjs/authentication-local').ho
 const { softDelete, iff, discard, isProvider, setUpdatedAt, setCreatedAt } = require('feathers-hooks-common') // disallow, isProvider, lowerCase
 
 const restrictOwner = [
+  authenticate('jwt'),
   restrictToOwner({
     idField: '_id',
     ownerField: '_id'
@@ -11,6 +12,7 @@ const restrictOwner = [
 ]
 
 const restrictRole = [
+  authenticate('jwt'),
   restrictToRoles({
     roles: ['admin', 'super-admin', 'manager', 'editor']
   })
