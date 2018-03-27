@@ -7,7 +7,7 @@ const defaults = {
   access_token: 'PAYPAL_ACCESS_TOKEN',
   client_id: 'PAYPAL_CLIENT_ID',
   client_secret: 'PAYPAL_CLIENT_SECRET',
-  currency: 'USD'
+  currency: 'CAD'
 }
 
 module.exports = function (options = {}) {

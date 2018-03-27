@@ -16,6 +16,7 @@ module.exports = function (app) {
 
     paymentType: { type: String, required: false },
     payPal: { type: Object, required: false },
+    stripe: { type: Object, required: false },
 
     public: { type: Boolean, default: true },
     deleted: { type: Boolean },
