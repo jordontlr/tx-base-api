@@ -36,22 +36,22 @@ module.exports = {
       setCreatedAt()
     ],
     update: [
+      collectTotals(),
       iff(
         hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.paymentInitiated && hook.data.paymentAuthorized && !hook.data.paymentComplete),
-        collectTotals(),
-        executePayPalPayment(),
-        context => {
-          context.data.paymentComplete = true
-          return context
-        },
-        setUpdatedAt()
+        executePayPalPayment()
       ),
       iff(
         hook => (hook.data && hook.data.paymentType === 'paypal' && hook.data.paymentInitiated && !hook.data.paymentAuthorized && !hook.data.paymentComplete),
-        collectTotals(),
-        authorizedPayPalPayment(),
-        setUpdatedAt()
-      )
+        authorizedPayPalPayment()
+      ),
+      iff(hook => (hook.data && hook.data.paymentType === 'strip' && hook.data.paymentInitiated && hook.data.paymentAuthorized && !hook.data.paymentComplete),
+        // collectTotals()
+      ),
+      iff(hook => (hook.data && hook.data.paymentType === 'strip' && hook.data.paymentInitiated && !hook.data.paymentAuthorized && !hook.data.paymentComplete),
+        // collectTotals()
+      ),
+      setUpdatedAt()
     ],
     patch: [ setCreatedAt() ],
     remove: []
