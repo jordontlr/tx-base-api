@@ -37,7 +37,7 @@ module.exports = function (app) {
 
   return {
     before: {
-      all: [ softDelete(), authenticate('jwt') ],
+      all: [ softDelete() ],
       find: [ ...restrictRole ],
       get: [ ...restrictOwner ],
       create: [
